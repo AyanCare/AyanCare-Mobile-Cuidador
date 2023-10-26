@@ -25,9 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.senai.sp.jandira.ayancare_frontmobile.R
-import br.senai.sp.jandira.ayancare_frontmobile.components.DefaultButton
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
+//import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
 
 
 @Composable
@@ -94,11 +93,11 @@ fun TelaPrincipalScreen(navController: NavController) {
                     )
                 Spacer(modifier = Modifier.height(54.dp))
 
-                DefaultButton(text = "Entrar", onClick = { navController.navigate("login_screen")})
+                //DefaultButton(text = "Entrar", onClick = { navController.navigate("login_screen")})
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                DefaultButton(text = "Cadastrar", onClick = {navController.navigate("cadastro_screen")})
+                //DefaultButton(text = "Cadastrar", onClick = {navController.navigate("cadastro_screen")})
             }
 
         }
