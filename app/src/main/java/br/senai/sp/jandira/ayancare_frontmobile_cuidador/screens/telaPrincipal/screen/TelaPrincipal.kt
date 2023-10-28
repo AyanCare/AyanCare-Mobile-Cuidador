@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.ayancare_frontmobile.screens.telaPrincipal.screen
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telaPrincipal.screen
 
 
 import androidx.compose.foundation.Image
@@ -26,12 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
-//import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
 
 
 @Composable
-fun TelaPrincipalScreen(navController: NavController) {
-
+fun TelaPrincipalScreen(
+    navController: NavController
+) {
     Surface (
         color = Color(0xFF35225F)
     ){
@@ -52,7 +53,6 @@ fun TelaPrincipalScreen(navController: NavController) {
                     modifier = Modifier.fillMaxSize(),
                     alignment = Alignment.BottomEnd
                 )
-
             }
             Image(
                 painter = painterResource(id = R.drawable.imagem_principal),
@@ -62,8 +62,6 @@ fun TelaPrincipalScreen(navController: NavController) {
                     .padding(6.dp),
                 contentScale = ContentScale.Crop
             )
-
-
         }
         Box(
             contentAlignment = Alignment.BottomCenter,
@@ -88,28 +86,25 @@ fun TelaPrincipalScreen(navController: NavController) {
                     fontFamily = FontFamily(Font(R.font.poppins)),
                     fontWeight = FontWeight(500),
                     color = Color(0xFF35225F),
-                    textAlign = TextAlign.Center,
-
-                    )
+                    textAlign = TextAlign.Center
+                )
                 Spacer(modifier = Modifier.height(54.dp))
-
-                //DefaultButton(text = "Entrar", onClick = { navController.navigate("login_screen")})
-
+                DefaultButton(
+                    text = "Entrar",
+                    onClick = {
+                        navController.navigate("login_screen")
+                    }
+                )
                 Spacer(modifier = Modifier.height(20.dp))
-
-                //DefaultButton(text = "Cadastrar", onClick = {navController.navigate("cadastro_screen")})
+                DefaultButton(
+                    text = "Cadastrar",
+                    onClick = {
+                        navController.navigate("cadastro_screen")
+                    }
+                )
             }
 
         }
 
     }
 }
-
-
-
-
-//@Preview(showBackground = true)
-//@Composable
-//fun TelaPrincipalPreview() {
-//    TelaPrincipalScreen()
-//}

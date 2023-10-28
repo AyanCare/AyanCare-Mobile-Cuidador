@@ -1,0 +1,94 @@
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.FinalizarCadastroScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.screen.CadastroScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.AddExperienceScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.login.screen.LoginScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.menuBar.MainScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telaPrincipal.screen.TelaPrincipalScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telasInstrucoes.telaInstrucao1.screen.TelaInstrucao1Screen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telasInstrucoes.telaInstrucao2.screen.TelaInstrucao2Screen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telasInstrucoes.telaInstrucao3.screen.TelaInstrucao3Screen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.ui.theme.AyanCareCuidadorTheme
+
+class SplashActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            AyanCareCuidadorTheme {
+
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navController = rememberNavController()
+
+                    val context = LocalContext.current
+                    val localStorage: Storage = Storage()
+
+                    NavHost(
+                        navController = navController,
+                        //startDestination = "main_screen"
+                        startDestination =
+                            if (CuidadorRepository(context).findUsers().isEmpty()){
+                                "tela_principal_screen"
+                            }else{
+                                "add_experience_screen"
+                            }
+
+                    ) {
+                        composable("tela_principal_screen") {
+                            TelaPrincipalScreen(navController = navController)
+                        }
+
+                        composable("login_screen") {
+                            LoginScreen(navController = navController, lifecycleScope = lifecycleScope)
+                        }
+
+                        composable("cadastro_screen") {
+                            CadastroScreen(navController = navController, lifecycleScope = lifecycleScope, navRotasController = navController, localStorage = localStorage)
+                        }
+
+                        composable("finalizar_cadastro_screen"){
+                            FinalizarCadastroScreen(navController = navController, lifecycleScope = lifecycleScope, localStorage = localStorage)
+                        }
+                        composable("add_experience_screen"){
+                            AddExperienceScreen(navController = navController)
+                        }
+
+                        composable("tela_instrucao1_screen") {
+                            TelaInstrucao1Screen(navController = navController)
+                        }
+
+                        composable("tela_instrucao2_screen") {
+                            TelaInstrucao2Screen(navController = navController)
+                        }
+
+                        composable("tela_instrucao3_screen") {
+                            TelaInstrucao3Screen(navController = navController)
+                        }
+
+
+                        composable("main_screen") {
+                            MainScreen(navRotasController = navController)
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}

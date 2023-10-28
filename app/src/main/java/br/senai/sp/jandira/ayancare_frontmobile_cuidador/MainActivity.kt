@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.login.screen.LoginScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telaPrincipal.screen.TelaPrincipalScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.ui.theme.AyanCareCuidadorTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,7 +18,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AyanCareCuidadorTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
@@ -23,7 +25,8 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     var context = LocalContext.current
 
-                    //TelaPrincipalScreen(navController = navController)
+                    TelaPrincipalScreen(navController = navController)
+
                 }
             }
         }

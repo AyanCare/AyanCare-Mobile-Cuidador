@@ -7,23 +7,25 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.Cuida
 fun saveLogin (
     context: Context,
     id: Long,
-    nome: String,
     token: String,
-    dataNascimento: String,
-    genero: String,
+    nome: String,
     email: String,
+    dataNascimento: String,
     foto:String,
+    experiencia:String,
+    genero: String,
     tipo: String
 ) : Long {
 
     val newPaciente = Cuidador(
         id = id,
-        nome = nome,
         token = token,
+        nome = nome,
         email = email,
         dataNascimento = dataNascimento,
-        genero = genero,
         foto = foto,
+        descricaoExperiencia = experiencia,
+        genero = genero,
         tipo_usuario = tipo
     )
 
