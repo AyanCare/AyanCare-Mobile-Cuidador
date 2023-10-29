@@ -45,15 +45,13 @@ fun MainScreen(navRotasController: NavController) {
 fun BottomBar(navController: NavHostController) {
 
     val screen = listOf(
-        BottomBarScreen.Stock,
         BottomBarScreen.Cadendary,
         BottomBarScreen.Home,
+        BottomBarScreen.Stock,
         BottomBarScreen.Profile,
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentdestination = navBackStackEntry?.destination
-
-    //Log.e("View", "MenuScreenA: ${viewModel.id}")
 
     BottomNavigation(
         modifier =  Modifier
@@ -62,10 +60,8 @@ fun BottomBar(navController: NavHostController) {
     ){
         screen.forEach{screen ->
             AddItem(screen = screen, currentDestination = currentdestination, navController = navController)
-            //Log.e("View", "MenuScreenB: ${viewModel.id}")
         }
     }
-    //Log.e("View", "MenuScreenC ${viewModel.id}")
 
 }
 

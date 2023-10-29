@@ -12,11 +12,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.SettingsScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.FinalizarCadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.screen.CadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.AddExperienceScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.login.screen.LoginScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.menuBar.MainScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.codigoPaciente.screen.PatientCodeScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.LinkedAccountsScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.screen.ProfileCaregiverScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.responsible.AddResponsibleScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.responsible.ResponsibleScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.sugestao.SuggestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telaPrincipal.screen.TelaPrincipalScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telasInstrucoes.telaInstrucao1.screen.TelaInstrucao1Screen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telasInstrucoes.telaInstrucao2.screen.TelaInstrucao2Screen
@@ -46,7 +53,7 @@ class SplashActivity : ComponentActivity() {
                             if (CuidadorRepository(context).findUsers().isEmpty()){
                                 "tela_principal_screen"
                             }else{
-                                "add_experience_screen"
+                                "main_screen"
                             }
 
                     ) {
@@ -81,10 +88,39 @@ class SplashActivity : ComponentActivity() {
                             TelaInstrucao3Screen(navController = navController)
                         }
 
-
                         composable("main_screen") {
                             MainScreen(navRotasController = navController)
                         }
+
+                        //SETTING
+                        composable("setting_screen"){
+                            SettingsScreen(navController = navController, navRotasController = navController)
+                        }
+
+                        composable("responsible_screen"){
+                            ResponsibleScreen(navController = navController, navRotasController = navController)
+                        }
+
+                        composable("add_responsible_screen"){
+                            AddResponsibleScreen(navController = navController, lifecycleScope = lifecycleScope)
+                        }
+
+                        composable("codigo_paciente_screen"){
+                            PatientCodeScreen(navController = navController, navRotasController = navController)
+                        }
+
+                        composable("linked_accounts_screen"){
+                            LinkedAccountsScreen(navController = navController, lifecycleScope = lifecycleScope, localStorage = localStorage)
+                        }
+
+                        composable("profile_caregiver_screen"){
+                            ProfileCaregiverScreen(navController = navController, localStorage = localStorage)
+                        }
+
+                        composable("sugestoes_screen"){
+                            SuggestionScreen(navController = navController, navRotasController = navController)
+                        }
+
 
                     }
                 }

@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit
 
+import br.senai.sp.jandira.ayancare_frontmobile.retrofit.conectar.service.ConectarService
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.genero.service.GeneroService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,6 +30,11 @@ object RetrofitFactory {
     fun getGenero(): GeneroService {
         return retrofitFactory.create(GeneroService::class.java)
     }
+
+    fun getConectar(): ConectarService {
+        return retrofitFactory.create(ConectarService::class.java)
+    }
+
 
 
 }

@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.KingBed
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -12,12 +13,6 @@ sealed class BottomBarScreen(
     val  title : String,
     val icon : ImageVector,
 ){
-
-    object  Stock : BottomBarScreen(
-        route = "stock",
-        title = "Estoque",
-        icon = Icons.Default.Assignment
-    )
     object  Cadendary : BottomBarScreen(
         route = "cadendary",
         title = "Calendário",
@@ -27,6 +22,11 @@ sealed class BottomBarScreen(
         route = "home",
         title = "Home",
         icon = Icons.Default.Home
+    )
+    object  Stock : BottomBarScreen(
+        route = "stock",
+        title = "Paciente",
+        icon = Icons.Default.KingBed
     )
     object  Profile : BottomBarScreen(
         route = "profile",
