@@ -18,9 +18,12 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.screen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.AddExperienceScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.login.screen.LoginScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.menuBar.MainScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.RelatorioScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.addRelatorio.screen.AddRelatorioScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen.AddQuestionScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen.QuestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.codigoPaciente.screen.PatientCodeScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.LinkedAccountsScreen
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.screen.ProfileCaregiverScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.responsible.AddResponsibleScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.responsible.ResponsibleScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.sugestao.SuggestionScreen
@@ -113,14 +116,28 @@ class SplashActivity : ComponentActivity() {
                             LinkedAccountsScreen(navController = navController, lifecycleScope = lifecycleScope, localStorage = localStorage)
                         }
 
-                        composable("profile_caregiver_screen"){
-                            ProfileCaregiverScreen(navController = navController, localStorage = localStorage)
-                        }
-
                         composable("sugestoes_screen"){
                             SuggestionScreen(navController = navController, navRotasController = navController)
                         }
 
+                        //RELATORIO
+                        composable("relatorio_screen") {
+                            RelatorioScreen(navController = navController)
+                        }
+
+                        composable("relatorio_screen") {
+                            AddRelatorioScreen(navController = navController)
+                        }
+
+                        composable("question_screen") {
+                            QuestionScreen(navController = navController)
+                        }
+
+                        composable("add_question_screen") {
+                            AddQuestionScreen(navController = navController)
+                        }
+
+                        //PERFIL
 
                     }
                 }

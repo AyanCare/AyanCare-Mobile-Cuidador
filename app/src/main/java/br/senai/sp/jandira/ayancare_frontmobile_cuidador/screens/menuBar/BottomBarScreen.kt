@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KingBed
+import androidx.compose.material.icons.filled.LocalHotel
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -26,7 +27,7 @@ sealed class BottomBarScreen(
     object  Stock : BottomBarScreen(
         route = "stock",
         title = "Paciente",
-        icon = Icons.Default.KingBed
+        icon = Icons.Default.LocalHotel
     )
     object  Profile : BottomBarScreen(
         route = "profile",

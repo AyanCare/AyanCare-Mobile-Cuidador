@@ -1,6 +1,5 @@
-package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.screen
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,26 +28,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.components.BoxProfile
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.components.CircleProfile
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.BoxProfile
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CircleProfile
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.components.CardTask
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CardTask
 
 @Composable
-fun ProfileCaregiverScreen(
-    navController: NavController,
-    //navRotasController: NavController,
-    localStorage: Storage
+fun ProfileScreen(
+    navController: NavController
 ) {
 
     val context = LocalContext.current
 
     val scrollState = rememberScrollState()
-
-    var id = localStorage.lerValor(context, "id_cuidador")
-
-    Log.e("TAG", "ProfileCaregiverScreen: $id", )
 
     Surface(
         color = Color(248, 240, 236)
@@ -82,7 +74,7 @@ fun ProfileCaregiverScreen(
                 )
 
                 Text(
-                    text = "listPaciente.nome",
+                    text = "nome",
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins)),
                     fontWeight = FontWeight(500),
@@ -90,7 +82,7 @@ fun ProfileCaregiverScreen(
                 )
 
                 Text(
-                    text = "Paciente",
+                    text = "Cuidador",
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins)),
                     fontWeight = FontWeight(400),
