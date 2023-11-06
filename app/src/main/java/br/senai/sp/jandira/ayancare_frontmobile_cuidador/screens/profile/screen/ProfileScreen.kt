@@ -32,6 +32,7 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.compone
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CircleProfile
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CardTask
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
 
 @Composable
 fun ProfileScreen(
@@ -41,6 +42,14 @@ fun ProfileScreen(
     val context = LocalContext.current
 
     val scrollState = rememberScrollState()
+
+    val array = CuidadorRepository(context = context).findUsers()
+
+    val cuidador = array[0]
+    var id = cuidador.id.toLong()
+    var foto = cuidador.foto
+    var nome = cuidador.nome
+    var descricao = cuidador.descricaoExperiencia
 
     Surface(
         color = Color(248, 240, 236)
@@ -70,11 +79,11 @@ fun ProfileScreen(
                     .fillMaxSize()
             ) {
                 CircleProfile(
-                    painter = "painterResource(id = R.drawable.instrucao3)"
+                    painter = foto
                 )
 
                 Text(
-                    text = "nome",
+                    text = nome,
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins)),
                     fontWeight = FontWeight(500),
@@ -95,10 +104,11 @@ fun ProfileScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(100.dp)
-                        .background(Color.White)
+                        .background(Color.White),
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto ",
+                        text = descricao,
                         fontSize = 14.sp,
                         fontFamily = FontFamily(Font(R.font.poppins)),
                         fontWeight = FontWeight(400),

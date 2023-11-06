@@ -18,14 +18,14 @@ fun BottomNavGraph(
         navController = navController,
         startDestination = BottomBarScreen.Home.route,
     ){
-        composable(route = BottomBarScreen.Cadendary.route){
-            //CalendaryScreen()
+//        composable(route = BottomBarScreen.Cadendary.route){
+//            //CalendaryScreen()
+//        }
+        composable(route = BottomBarScreen.Stock.route){
+            //EstoqueScreen(navRotasController = navRotasController, navController = navController)
         }
         composable(route = BottomBarScreen.Home.route){
             HomeScreen(navController = navController, navRotasController =  navRotasController)
-        }
-        composable(route = BottomBarScreen.Stock.route){
-            //EstoqueScreen(navRotasController = navRotasController, navController = navController)
         }
         composable(route = BottomBarScreen.Profile.route){
             ProfileScreen(navController = navController)

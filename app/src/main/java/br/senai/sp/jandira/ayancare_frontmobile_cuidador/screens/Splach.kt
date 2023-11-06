@@ -125,7 +125,7 @@ class SplashActivity : ComponentActivity() {
                             RelatorioScreen(navController = navController)
                         }
 
-                        composable("relatorio_screen") {
+                        composable("add_relatorio_screen") {
                             AddRelatorioScreen(navController = navController)
                         }
 

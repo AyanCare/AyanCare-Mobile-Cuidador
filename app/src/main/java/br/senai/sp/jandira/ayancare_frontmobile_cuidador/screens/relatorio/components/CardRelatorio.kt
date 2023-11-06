@@ -20,13 +20,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 
 @Composable
-fun CardRelatorio() {
+fun CardRelatorio(
+    text : String,
+    data: String,
+    horario: String
+) {
+
+    val textSmall = if (text.length > 30) {
+        text.substring(0, 30) + "..."
+    } else {
+        text
+    }
+
 
     Card(
         modifier = Modifier
@@ -52,19 +66,18 @@ fun CardRelatorio() {
                     text = "Relatório",
                     fontSize = 16.sp,
                     lineHeight = 20.sp,
-                    //fontFamily = FontFamily(Font(R.font.manrope)),
+                    fontFamily = FontFamily(Font(R.font.manrope)),
                     fontWeight = FontWeight(600),
                     color = Color(0xFF35225F)
                 )
                 Text(
-                    text = "Sed ut perspiciatis unde omnis",
+                    text = textSmall,
                     fontSize = 12.sp,
-                    //fontFamily = FontFamily(Font(R.font.manrope)),
+                    fontFamily = FontFamily(Font(R.font.manrope)),
                     fontWeight = FontWeight(400),
                     color = Color(0xFF9986BD)
                 )
             }
-
         }
         Column (
             modifier = Modifier
@@ -75,28 +88,26 @@ fun CardRelatorio() {
             horizontalAlignment = Alignment.End
         ){
             Text(
-                text = "13/07/2023",
+                text = data,
                 fontSize = 10.sp,
-                //fontFamily = FontFamily(Font(R.font.manrope)),
+                fontFamily = FontFamily(Font(R.font.manrope)),
                 fontWeight = FontWeight(800),
                 color = Color(0xFF7E6F94)
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = "17:33",
+                text = horario,
                 fontSize = 10.sp,
-                //fontFamily = FontFamily(Font(R.font.manrope)),
+                fontFamily = FontFamily(Font(R.font.manrope)),
                 fontWeight = FontWeight(700),
                 color = Color(0xFF7E6F94)
             )
         }
-
     }
-
 }
 
-@Preview
-@Composable
-fun fcdascvasd() {
-    CardRelatorio()
-}
+//@Preview
+//@Composable
+//fun fcdascvasd() {
+//    CardRelatorio()
+//}

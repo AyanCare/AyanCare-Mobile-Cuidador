@@ -45,9 +45,9 @@ fun MainScreen(navRotasController: NavController) {
 fun BottomBar(navController: NavHostController) {
 
     val screen = listOf(
-        BottomBarScreen.Cadendary,
-        BottomBarScreen.Home,
+        //BottomBarScreen.Cadendary,
         BottomBarScreen.Stock,
+        BottomBarScreen.Home,
         BottomBarScreen.Profile,
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()

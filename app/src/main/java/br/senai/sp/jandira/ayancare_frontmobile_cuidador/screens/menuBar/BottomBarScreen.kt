@@ -14,20 +14,20 @@ sealed class BottomBarScreen(
     val  title : String,
     val icon : ImageVector,
 ){
-    object  Cadendary : BottomBarScreen(
-        route = "cadendary",
-        title = "Calendário",
-        icon = Icons.Default.DateRange
+//    object  Cadendary : BottomBarScreen(
+//        route = "cadendary",
+//        title = "Calendário",
+//        icon = Icons.Default.DateRange
+//    )
+    object  Stock : BottomBarScreen(
+        route = "stock",
+        title = "Paciente",
+        icon = Icons.Default.LocalHotel
     )
     object  Home : BottomBarScreen(
         route = "home",
         title = "Home",
         icon = Icons.Default.Home
-    )
-    object  Stock : BottomBarScreen(
-        route = "stock",
-        title = "Paciente",
-        icon = Icons.Default.LocalHotel
     )
     object  Profile : BottomBarScreen(
         route = "profile",
