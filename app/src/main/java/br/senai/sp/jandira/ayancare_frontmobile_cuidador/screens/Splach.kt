@@ -12,16 +12,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.SettingsScreen
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.FinalizarCadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.screen.CadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.AddExperienceScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.FinalizarCadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.login.screen.LoginScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.menuBar.MainScreen
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.RelatorioScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.RelatoriosScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.addRelatorio.screen.AddRelatorioScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen.AddQuestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen.QuestionScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.view.RelatorioScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.view.ViewQuestionScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorioHumor.screen.RelatorioHumorScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorioHumor.screen.RelatoriosHumorScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.SettingsScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.codigoPaciente.screen.PatientCodeScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.LinkedAccountsScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.responsible.AddResponsibleScreen
@@ -121,9 +125,14 @@ class SplashActivity : ComponentActivity() {
                         }
 
                         //RELATORIO
-                        composable("relatorio_screen") {
-                            RelatorioScreen(navController = navController)
+                        composable("relatorios_screen") {
+                            RelatoriosScreen(navController = navController, localStorage)
                         }
+
+                        composable("relatorio_screen") {
+                            RelatorioScreen(navController = navController, localStorage)
+                        }
+
 
                         composable("add_relatorio_screen") {
                             AddRelatorioScreen(navController = navController)
@@ -133,8 +142,21 @@ class SplashActivity : ComponentActivity() {
                             QuestionScreen(navController = navController)
                         }
 
+                        composable("view_question_screen") {
+                            ViewQuestionScreen(navController = navController, localStorage)
+                        }
+
                         composable("add_question_screen") {
                             AddQuestionScreen(navController = navController)
+                        }
+
+                        //RELATORIO HUMOR
+                        composable("relatorios_humor_screen") {
+                            RelatoriosHumorScreen(navController = navController, localStorage)
+                        }
+
+                        composable("relatorio_humor_screen") {
+                            RelatorioHumorScreen(navController = navController, localStorage)
                         }
 
                         //PERFIL

@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -24,10 +26,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -37,16 +39,19 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.Rela
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.service.CuidadorRelatorio
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.service.PacienteRelatorio
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.service.Relatorio
-import br.senai.sp.jandira.test.relatorio.components.CardRelatorio
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.components.FloatingActionButtonRelatorio
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.components.CardRelatorio
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun RelatorioScreen(
-    navController: NavController
+fun RelatoriosScreen(
+    navController: NavController,
+    localStorage: Storage
 ) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
 
     var listRelatorio by remember {
@@ -85,7 +90,6 @@ fun RelatorioScreen(
                 Log.e("TAG", "${response.body()!!.relatorio}")
                 listRelatorio = response.body()!!.relatorio
             }
-            //Log.e("TAG", "onResponse: $listCor")
         }
 
         override fun onFailure(call: Call<RelatorioResponse>, t: Throwable) {
@@ -98,6 +102,17 @@ fun RelatorioScreen(
     Surface(
         color = Color(248, 240, 236)
     ) {
+        IconButton(
+            onClick = {
+                navController.navigate("main_screen")
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBackIosNew,
+                contentDescription = "",
+                tint = Color.Black
+            )
+        }
         Column(
             //verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -132,7 +147,16 @@ fun RelatorioScreen(
                     CardRelatorio(
                         text = it.texto,
                         data = it.data,
-                        horario =  it.horario
+                        horario = it.horario,
+                        onClick = {
+                            localStorage.salvarValor(context, it.id.toString(), "id_relatorio")
+                            localStorage.salvarValor(context, it.texto, "descricao_relatorio")
+                            localStorage.salvarValor(context, it.paciente.id.toString(), "id_paciente_relatorio")
+                            localStorage.salvarValor(context, it.paciente.nome, "nome_paciente_relatorio")
+                            localStorage.salvarValor(context, it.paciente.idade, "idade_paciente_relatorio")
+                            localStorage.salvarValor(context, it.paciente.genero, "genero_paciente_relatorio")
+                            navController.navigate("relatorio_screen")
+                        }
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                 }
@@ -142,9 +166,3 @@ fun RelatorioScreen(
         FloatingActionButtonRelatorio(navController)
     }
 }
-//
-//@Preview
-//@Composable
-//fun fsdhf() {
-//    RelatorioScreen( )
-//}

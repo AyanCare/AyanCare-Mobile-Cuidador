@@ -1,6 +1,5 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,20 +27,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.RelatorioResponse
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.service.CuidadorRelatorio
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.service.PacienteRelatorio
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.service.Relatorio
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @Composable
 fun QuestionScreen(

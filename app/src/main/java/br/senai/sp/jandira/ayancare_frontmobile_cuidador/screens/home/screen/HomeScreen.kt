@@ -101,7 +101,7 @@ fun HomeScreen(
                         color_icon = Color.White,
                         color_text = Color.White,
                         onClick = {
-                            navRotasController.navigate("relatorio_humor_test_screen")
+                            navRotasController.navigate("relatorios_humor_screen")
                         }
                     )
                     Spacer(modifier = Modifier.height(10.dp))
@@ -112,7 +112,7 @@ fun HomeScreen(
                         color_icon = Color.White,
                         color_text = Color.White,
                         onClick = {
-                            navRotasController.navigate("relatorio_screen")
+                            navRotasController.navigate("relatorios_screen")
                         }
                     )
                 }
