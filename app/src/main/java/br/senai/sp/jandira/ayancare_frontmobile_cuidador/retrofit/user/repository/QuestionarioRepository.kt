@@ -1,26 +1,26 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.user.repository
 
+import androidx.core.os.persistableBundleOf
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.service.RelatorioService
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Response
 
-class RelatorioRepository {
+class QuestionarioRepository {
 
     private val apiService = RetrofitFactory.getInstance().create(RelatorioService::class.java)
 
-    suspend fun registerRelatorio(
-        texto_relatorio: String,
-        validacao: Int,
-        id_paciente: Int,
-        id_cuidador: Int
+    suspend fun registerQuestionario(
+        id_perguta:Int,
+        id_relatorio: Int,
+        resposta:Boolean
     ): Response<JsonObject> {
         val requestBody = JsonObject().apply {
-            addProperty("texto_relatorio", texto_relatorio)
-            addProperty("validacao", validacao)
-            addProperty("id_paciente", id_paciente)
-            addProperty("id_cuidador", id_cuidador)
+
+            addProperty("id_pergunta", id_perguta)
+            addProperty("id_relatorio", id_relatorio)
+            addProperty("resposta",resposta)
         }
 
         return apiService.createRelatorio(requestBody)

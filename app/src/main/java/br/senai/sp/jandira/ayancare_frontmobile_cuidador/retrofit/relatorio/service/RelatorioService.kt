@@ -15,6 +15,6 @@ interface RelatorioService {
 
     @Headers("Content-Type: application/json")
     @POST("/v1/ayan/conectar")
-    suspend fun createRelatorio(@Body body: JsonObject): retrofit2.Call<JsonObject>
+    suspend fun createRelatorio(@Body body: JsonObject): retrofit2.Response<JsonObject>
 
 }
