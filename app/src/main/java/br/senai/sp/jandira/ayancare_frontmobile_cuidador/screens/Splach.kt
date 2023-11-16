@@ -135,7 +135,7 @@ class SplashActivity : ComponentActivity() {
 
 
                         composable("add_relatorio_screen") {
-                            AddRelatorioScreen(navController = navController)
+                            AddRelatorioScreen(navController = navController,lifecycleScope = lifecycleScope)
                         }
 
                         composable("question_screen") {

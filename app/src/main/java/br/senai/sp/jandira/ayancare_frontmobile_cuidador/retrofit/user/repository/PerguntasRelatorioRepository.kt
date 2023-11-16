@@ -6,25 +6,21 @@ import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Response
 
-class RelatorioRepository {
+class PerguntasRelatorioRepository {
 
     private val apiService = RetrofitFactory.getInstance().create(RelatorioService::class.java)
 
-    suspend fun registerRelatorio(
-        texto_relatorio: String,
-        validacao: Int,
-        id_paciente: Int,
-        id_cuidador: Int
+    suspend fun registerPergunta(
+        pergunta:String,
+        id_cuidador:Int
     ): Response<JsonObject> {
         val requestBody = JsonObject().apply {
-            addProperty("texto_relatorio", texto_relatorio)
-            addProperty("validacao", validacao)
-            addProperty("id_paciente", id_paciente)
+
+            addProperty("pergunta", pergunta)
             addProperty("id_cuidador", id_cuidador)
         }
 
         return apiService.createRelatorio(requestBody)
 
     }
-
 }
