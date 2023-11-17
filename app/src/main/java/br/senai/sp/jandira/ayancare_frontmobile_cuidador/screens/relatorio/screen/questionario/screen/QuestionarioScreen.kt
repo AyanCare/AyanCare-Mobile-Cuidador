@@ -1,6 +1,5 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -38,8 +37,6 @@ import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.MainActivity
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.questionario.QuestionarioResponse
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.questionario.service.Questionario
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.user.repository.QuestionarioRepository
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 import kotlinx.coroutines.launch
@@ -67,55 +64,48 @@ fun QuestionScreen(
     }
 
 
-    val id_relatorio = localStorage.lerValor(context,"id_relatorio")!!.toInt()
+    val id_relatorio = localStorage.lerValor(context,"id_relatorio")
 
-    val id_pergunta = localStorage.lerValor(context,"id_pergunta")!!.toInt()
+    val id_pergunta = localStorage.lerValor(context,"id_pergunta")
 
     Log.d("id","${id_relatorio}")
 
     Log.d("id","${id_pergunta}")
 
 
-    @SuppressLint("SuspiciousIndentation")
-    fun response(
-        id_pergunta:Int,
-        id_relatorio:Int,
-        resposta:Boolean
-    ){
-        val questionarioRepository= QuestionarioRepository()
-            lifecycleScope.launch {
-
-                val response = questionarioRepository.registerQuestionario(
-                    id_pergunta,
-                    id_relatorio,
-                    resposta
-                )
-                if (response.isSuccessful){
-                    Log.e(MainActivity::class.java.simpleName, "Relatorio bem-sucedido")
-
-                    val checagem = response.body()?.get("status")
-
-                    if (checagem.toString() == "404"){
-
-                        Toast.makeText(context, "algo está invalido", Toast.LENGTH_LONG).show()
-                    }else{
-                        Toast.makeText(context, "Sucesso!!", Toast.LENGTH_SHORT).show()
-                        navController.navigate("add_question_screen")
-                    }
-                }else{
-                    val errorBody = response.errorBody()?.string()
-
-                    Log.e(MainActivity::class.java.simpleName, "Erro durante o Relatorio: $errorBody")
-                    Toast.makeText(context, "algo está invalido", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-
-    }
-
-
-
-
+//    fun response(
+//        id_pergunta:Int,
+//        id_relatorio:Int,
+//        resposta:Boolean
+//    ){
+//        val questionarioRepository= QuestionarioRepository()
+//            lifecycleScope.launch {
+//
+//                val response = questionarioRepository.registerQuestionario(
+//                    id_pergunta,
+//                    id_relatorio,
+//                    resposta
+//                )
+//                if (response.isSuccessful){
+//                    Log.e(MainActivity::class.java.simpleName, "Relatorio bem-sucedido")
+//
+//                    val checagem = response.body()?.get("status")
+//
+//                    if (checagem.toString() == "404"){
+//
+//                        Toast.makeText(context, "algo está invalido", Toast.LENGTH_LONG).show()
+//                    }else{
+//                        Toast.makeText(context, "Sucesso!!", Toast.LENGTH_SHORT).show()
+//                        navController.navigate("add_question_screen")
+//                    }
+//                }else{
+//                    val errorBody = response.errorBody()?.string()
+//
+//                    Log.e(MainActivity::class.java.simpleName, "Erro durante o Relatorio: $errorBody")
+//                    Toast.makeText(context, "algo está invalido", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//    }
     Surface(
         color = Color(248, 240, 236)
     ) {
@@ -151,11 +141,13 @@ fun QuestionScreen(
                 Spacer(modifier = Modifier.height(20.dp))
                 DefaultButton(
                     onClick = {
-                        response(
-                            id_pergunta,
-                            id_relatorio,
-                            resposta = true
-                        )
+//                        response(
+//                                id_pergunta!!.toInt(),
+//                                id_relatorio!!.toInt(),
+//                                resposta = false
+//                        )
+
+                        navController.navigate("add_question_screen")
                     },
                     text = "+ Adicionar Pergunta"
                 )
@@ -227,14 +219,3 @@ fun QuestionScreen(
     }
 }
 
-
-@Composable
-fun test() {
-
-    var olhe by remember { mutableStateOf("") }
-
-
-
-
-
-}

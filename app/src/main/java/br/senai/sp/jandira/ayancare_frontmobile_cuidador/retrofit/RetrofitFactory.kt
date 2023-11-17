@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit
 
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.conectar.service.ConectarService
+import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.service.CuidadorService
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.genero.service.GeneroService
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.questionario.service.QuestionarioService
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.service.RelatorioService
@@ -32,6 +33,10 @@ object RetrofitFactory {
 
     fun getConectar(): ConectarService {
         return retrofitFactory.create(ConectarService::class.java)
+    }
+
+    fun getCuidador(): CuidadorService {
+        return retrofitFactory.create(CuidadorService::class.java)
     }
 
     fun getRelatorio(): RelatorioService {

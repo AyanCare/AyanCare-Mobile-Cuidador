@@ -45,8 +45,8 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.MainActivity
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.user.repository.PerguntasRelatorioRepository
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.user.repository.QuestionarioRepository
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
@@ -63,7 +63,10 @@ fun AddQuestionScreen(
 
     val context = LocalContext.current
 
-    val id_pergunta = localStorage.lerValor(context,"id_cuidador")!!.toInt()
+    val array = CuidadorRepository(context = context).findUsers()
+
+    val cuidador = array[0]
+    var id = cuidador.id.toLong()
 
 
     fun response(
@@ -91,8 +94,8 @@ fun AddQuestionScreen(
                     val jsonObject = JSONObject(jsonString)
                     val relatorioObject = jsonObject.getJSONObject("pergunta")
 
-
                     val id = relatorioObject.getInt("id")
+                    Log.i("id_pergunta", "response:$id ")
 
                     localStorage.salvarValor(context,id.toString(),"id_pergunta")
 
@@ -100,7 +103,7 @@ fun AddQuestionScreen(
 
 
                     Toast.makeText(context, "Sucesso!!", Toast.LENGTH_SHORT).show()
-                    navController.navigate("relatorio_screen")
+                    navController.navigate("question_screen")
                 }
             }else{
                 val errorBody = response.errorBody()?.string()
@@ -169,9 +172,10 @@ fun AddQuestionScreen(
             ) {
                 DefaultButton(
                     onClick = {
-
-
-
+                            response(
+                                descricaoState,
+                                id.toInt()
+                            )
                     },
                     text = "Salvar"
                 )
