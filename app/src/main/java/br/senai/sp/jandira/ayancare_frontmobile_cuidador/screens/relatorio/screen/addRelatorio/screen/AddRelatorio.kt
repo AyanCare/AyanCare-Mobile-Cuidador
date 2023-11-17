@@ -1,3 +1,5 @@
+@file:Suppress("NAME_SHADOWING")
+
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.addRelatorio.screen
 
 import android.util.Log
@@ -39,13 +41,16 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.MainActivity
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.user.repository.RelatorioRepository
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 @Composable
 fun AddRelatorioScreen(
     navController: NavController,
-    lifecycleScope: LifecycleCoroutineScope
+    lifecycleScope: LifecycleCoroutineScope,
+    localStorage: Storage
 ) {
 
 
@@ -90,8 +95,18 @@ fun AddRelatorioScreen(
                 if (checagem.toString() == "404") {
                     Toast.makeText(context, "algo está invalido", Toast.LENGTH_LONG).show()
                 } else {
+
+                    val jsonString = response.body().toString()
+                    val jsonObject = JSONObject(jsonString)
+                    val relatorioObject = jsonObject.getJSONObject("relatorio")
+
+
+                    val id = relatorioObject.getInt("id")
+
+                    localStorage.salvarValor(context,id.toString(),"id_relatorio")
+
                     Toast.makeText(context, "Sucesso!!", Toast.LENGTH_SHORT).show()
-                    //navController.navigate("question_screen")
+                    navController.navigate("question_screen")
                 }
             } else {
                 val errorBody = response.errorBody()?.string()
@@ -100,7 +115,6 @@ fun AddRelatorioScreen(
                 Toast.makeText(context, "algo está invalido", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
 
@@ -187,9 +201,10 @@ fun AddRelatorioScreen(
                 ) {
                     DefaultButton(
                         onClick = {
-                            relatorio("teste",
+                            relatorio(
+                                "teste",
                                 1,
-                                5,
+                                27,
                                 id.toInt()
 
                                 )

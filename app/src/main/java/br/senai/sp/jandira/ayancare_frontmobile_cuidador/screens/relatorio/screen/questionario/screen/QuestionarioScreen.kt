@@ -1,5 +1,8 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen
 
+import android.annotation.SuppressLint
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,19 +27,29 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.MainActivity
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.questionario.QuestionarioResponse
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.questionario.service.Questionario
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.user.repository.QuestionarioRepository
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
+import kotlinx.coroutines.launch
 
 @Composable
 fun QuestionScreen(
     navController: NavController,
     //navRotasController: NavController
+    localStorage: Storage,
+    lifecycleScope: LifecycleCoroutineScope,
 ) {
     var descricaoState by remember {
         mutableStateOf("")
@@ -47,9 +60,60 @@ fun QuestionScreen(
         "Não",
     )
 
+    val context = LocalContext.current
+
     var isSelectState by remember {
         mutableStateOf("")
     }
+
+
+    val id_relatorio = localStorage.lerValor(context,"id_relatorio")!!.toInt()
+
+    val id_pergunta = localStorage.lerValor(context,"id_pergunta")!!.toInt()
+
+    Log.d("id","${id_relatorio}")
+
+    Log.d("id","${id_pergunta}")
+
+
+    @SuppressLint("SuspiciousIndentation")
+    fun response(
+        id_pergunta:Int,
+        id_relatorio:Int,
+        resposta:Boolean
+    ){
+        val questionarioRepository= QuestionarioRepository()
+            lifecycleScope.launch {
+
+                val response = questionarioRepository.registerQuestionario(
+                    id_pergunta,
+                    id_relatorio,
+                    resposta
+                )
+                if (response.isSuccessful){
+                    Log.e(MainActivity::class.java.simpleName, "Relatorio bem-sucedido")
+
+                    val checagem = response.body()?.get("status")
+
+                    if (checagem.toString() == "404"){
+
+                        Toast.makeText(context, "algo está invalido", Toast.LENGTH_LONG).show()
+                    }else{
+                        Toast.makeText(context, "Sucesso!!", Toast.LENGTH_SHORT).show()
+                        navController.navigate("add_question_screen")
+                    }
+                }else{
+                    val errorBody = response.errorBody()?.string()
+
+                    Log.e(MainActivity::class.java.simpleName, "Erro durante o Relatorio: $errorBody")
+                    Toast.makeText(context, "algo está invalido", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+    }
+
+
 
 
     Surface(
@@ -87,7 +151,11 @@ fun QuestionScreen(
                 Spacer(modifier = Modifier.height(20.dp))
                 DefaultButton(
                     onClick = {
-                        navController.navigate("add_question_screen")
+                        response(
+                            id_pergunta,
+                            id_relatorio,
+                            resposta = true
+                        )
                     },
                     text = "+ Adicionar Pergunta"
                 )
@@ -157,4 +225,16 @@ fun QuestionScreen(
             }
         }
     }
+}
+
+
+@Composable
+fun test() {
+
+    var olhe by remember { mutableStateOf("") }
+
+
+
+
+
 }

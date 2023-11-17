@@ -135,11 +135,11 @@ class SplashActivity : ComponentActivity() {
 
 
                         composable("add_relatorio_screen") {
-                            AddRelatorioScreen(navController = navController,lifecycleScope = lifecycleScope)
+                            AddRelatorioScreen(navController = navController,lifecycleScope = lifecycleScope,localStorage)
                         }
 
                         composable("question_screen") {
-                            QuestionScreen(navController = navController)
+                            QuestionScreen(navController = navController, localStorage, lifecycleScope = lifecycleScope)
                         }
 
                         composable("view_question_screen") {
@@ -147,7 +147,7 @@ class SplashActivity : ComponentActivity() {
                         }
 
                         composable("add_question_screen") {
-                            AddQuestionScreen(navController = navController)
+                            AddQuestionScreen(navController = navController,localStorage,lifecycleScope = lifecycleScope )
                         }
 
                         //RELATORIO HUMOR
