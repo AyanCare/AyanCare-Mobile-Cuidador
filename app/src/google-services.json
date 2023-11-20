@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "539555106935",
+    "project_id": "ayancare-mobilecuidador",
+    "storage_bucket": "ayancare-mobilecuidador.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539555106935:android:1fed0dfb2dafb2d0e33672",
+        "android_client_info": {
+          "package_name": "br.senai.sp.jandira.ayancare_frontmobile_cuidador"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0GXnKvijB_OVCjCjwe_TqGRvraBa5OG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

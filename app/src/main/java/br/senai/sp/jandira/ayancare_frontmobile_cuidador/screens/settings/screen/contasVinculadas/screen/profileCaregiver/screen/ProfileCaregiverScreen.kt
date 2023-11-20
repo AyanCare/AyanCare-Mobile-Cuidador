@@ -2,6 +2,7 @@ package br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasV
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,12 +13,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,19 +35,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.senai.sp.jandira.ayancare_frontmobile.R
-import br.senai.sp.jandira.ayancare_frontmobile.retrofit.RetrofitFactory
-import br.senai.sp.jandira.ayancare_frontmobile.retrofit.cuidador.CuidadorResponse
-import br.senai.sp.jandira.ayancare_frontmobile.retrofit.cuidador.service.Cuidador
-import br.senai.sp.jandira.ayancare_frontmobile.screens.Storage
-import br.senai.sp.jandira.ayancare_frontmobile.screens.perfil.components.BoxProfile
-import br.senai.sp.jandira.ayancare_frontmobile.screens.perfil.components.CircleProfile
+import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.CuidadorResponse
+import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.PacienteResponse
+import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.service.ComorbidadesList
+import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.service.DoencasCronicasList
+import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.service.Paciente
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen.profileCaregiver.components.CardTask
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.BoxProfile
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CircleProfile
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
@@ -54,39 +56,52 @@ fun ProfileCaregiverScreen(
     navController: NavController,
     //navRotasController: NavController,
     localStorage: Storage
-) {
+){
     val context = LocalContext.current
 
     val scrollState = rememberScrollState()
 
-    var id = localStorage.lerValor(context, "id_cuidador_conexao")
+
+    var id = localStorage.lerValor(context, "id_paciente_conexao")
     val token = localStorage.lerValor(context, "token_paciente")
 
-    Log.e("TAG", "ProfileCaregiverScreen: $id")
 
-    var listCuidadores by remember {
+    Log.e("TAG","ProfileCaregiverScreen: $id")
+
+
+    var listPacientes by remember{
+
         mutableStateOf(
             Paciente(
-
+                id = 0,
+                nome = "",
+                data_nascimento = "",
+                email = "",
+                senha = "",
+                cpf = "",
+                foto = "",
+                historico_medico = "",
+                doencas_cronicas = emptyList(),
+                comorbidades = emptyList()
             )
         )
     }
 
-    //Cria uma chamada para o endpoint
-    var call = RetrofitFactory.getCuidador().getCuidadorByID(token = token.toString(), id = id)
 
-    call.enqueue(object : Callback<CuidadorResponse> {
+    //Criar uma Chamada para endPoint
+    var call = RetrofitFactory.getPatient().getPatientById(token = token.toString(), id = id)
+
+    call.enqueue(object : retrofit2.Callback<PacienteResponse> {
         override fun onResponse(
-            call: Call<CuidadorResponse>,
-            response: Response<CuidadorResponse>
-        ) {
-            listCuidadores = response.body()!!.cuidador
+            call: Call<PacienteResponse>,
+            response: Response<PacienteResponse>
+        ){
+            listPacientes = response.body()!!.paciente
         }
 
-        override fun onFailure(call: Call<CuidadorResponse>, t: Throwable) {
+        override fun onFailure(call: Call<PacienteResponse>, t: Throwable){
             Log.i("ds3t", "onFailure: ${t.message}")
         }
-
     })
 
     Surface(
@@ -96,9 +111,9 @@ fun ProfileCaregiverScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-        ) {
+        ){
             BoxProfile()
-            IconButton(
+            androidx.compose.material.IconButton(
                 onClick = {
                     navController.navigate("setting_screen")
                 }
@@ -109,82 +124,88 @@ fun ProfileCaregiverScreen(
                     tint = Color.White
                 )
             }
-            Column(
-                //verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.CenterHorizontally,
+
+        }
+
+        Column(
+            //verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(top = 110.dp, start = 15.dp, end = 15.dp, bottom = 20.dp)
+                .fillMaxSize()
+        ) {
+            CircleProfile(
+                painter = "painterResource(id = R.drawable.instrucao3)"
+            )
+
+            Text(
+                text = listPacientes.nome,
+                fontSize = 24.sp,
+                fontFamily = FontFamily(Font(R.font.poppins)),
+                fontWeight = FontWeight(500),
+                color = Color(0xFF000000)
+            )
+
+            Text(
+                text = "Paciente",
+                fontSize = 16.sp,
+                fontFamily = FontFamily(Font(R.font.poppins)),
+                fontWeight = FontWeight(400),
+                color = Color(0xFF000000)
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Box(
                 modifier = Modifier
-                    .padding(top = 110.dp, start = 15.dp, end = 15.dp, bottom = 20.dp)
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .background(Color.White),
+                contentAlignment = Alignment.Center
             ) {
-                CircleProfile(
-                    painter = "painterResource(id = R.drawable.instrucao3)"
-                )
-
                 Text(
-                    text = listCuidadores.nome,
-                    fontSize = 24.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins)),
-                    fontWeight = FontWeight(500),
-                    color = Color(0xFF000000)
-                )
-
-                Text(
-                    text = "Cuidador",
-                    fontSize = 16.sp,
+                    text = listPacientes.data_nascimento,
+                    fontSize = 14.sp,
                     fontFamily = FontFamily(Font(R.font.poppins)),
                     fontWeight = FontWeight(400),
-                    color = Color(0xFF000000)
+                    color = Color(0xFF9986BD),
+                    textAlign = TextAlign.Center
                 )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp)
-                        .background(Color.White),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = listCuidadores.descricao_experiencia,
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFF9986BD),
-                        textAlign = TextAlign.Center
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Text(
-                    text = "Tarefas de Hoje",
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins)),
-                    fontWeight = FontWeight(500),
-                    color = Color(0xFF35225F)
-                )
-                Spacer(modifier = Modifier.height(15.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
             }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(
+                text = "Tarefas de Hoje",
+                fontSize = 20.sp,
+                fontFamily = FontFamily(Font(R.font.poppins)),
+                fontWeight = FontWeight(500),
+                color = Color(0xFF35225F)
+            )
+            Spacer(modifier = Modifier.height(15.dp))
+            CardTask()
+            Spacer(modifier = Modifier.height(10.dp))
+            CardTask()
+            Spacer(modifier = Modifier.height(10.dp))
+            CardTask()
+            Spacer(modifier = Modifier.height(10.dp))
+            CardTask()
+            Spacer(modifier = Modifier.height(10.dp))
+            CardTask()
+            Spacer(modifier = Modifier.height(10.dp))
+            CardTask()
+            Spacer(modifier = Modifier.height(10.dp))
+            CardTask()
+            Spacer(modifier = Modifier.height(10.dp))
+            CardTask()
+            Spacer(modifier = Modifier.height(10.dp))
+            CardTask()
+            Spacer(modifier = Modifier.height(10.dp))
+            CardTask()
         }
+
+
+
     }
+
 }
