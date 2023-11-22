@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.home.screen.HomeScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.screen.PacienteScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.screen.ProfileScreen
 
 @Composable
@@ -22,7 +23,7 @@ fun BottomNavGraph(
 //            //CalendaryScreen()
 //        }
         composable(route = BottomBarScreen.Stock.route){
-            //EstoqueScreen(navRotasController = navRotasController, navController = navController)
+            PacienteScreen(navController = navController)
         }
         composable(route = BottomBarScreen.Home.route){
             HomeScreen(navController = navController, navRotasController =  navRotasController)
