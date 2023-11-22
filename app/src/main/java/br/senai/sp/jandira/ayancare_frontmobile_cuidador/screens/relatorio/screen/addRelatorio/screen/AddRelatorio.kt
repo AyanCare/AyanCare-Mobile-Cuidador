@@ -99,9 +99,11 @@ fun AddRelatorioScreen(
                     val jsonString = response.body().toString()
                     val jsonObject = JSONObject(jsonString)
                     val relatorioObject = jsonObject.getJSONObject("relatorio")
+                    Log.e("json String", "relatorio: $jsonString", )
 
 
                     val id = relatorioObject.getInt("id")
+                    Log.i("teste", "relatorio: $id")
 
                     localStorage.salvarValor(context,id.toString(),"id_relatorio")
 

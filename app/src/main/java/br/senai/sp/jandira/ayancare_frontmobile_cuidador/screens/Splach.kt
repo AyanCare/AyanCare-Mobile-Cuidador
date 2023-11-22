@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen.profileCaregiver.screen.ProfileCaregiverScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.screen.CadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.AddExperienceScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.FinalizarCadastroScreen
@@ -114,6 +115,10 @@ class SplashActivity : ComponentActivity() {
 
                         composable("codigo_paciente_screen"){
                             PatientCodeScreen(navController = navController, navRotasController = navController)
+                        }
+
+                        composable("profile_caregiver_screen"){
+                            ProfileCaregiverScreen(navController = navController, localStorage = localStorage)
                         }
 
                         composable("linked_accounts_screen"){

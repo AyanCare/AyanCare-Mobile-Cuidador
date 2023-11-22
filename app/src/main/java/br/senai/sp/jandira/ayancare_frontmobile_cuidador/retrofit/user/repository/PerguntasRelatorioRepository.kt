@@ -15,12 +15,11 @@ class PerguntasRelatorioRepository {
         id_cuidador:Int
     ): Response<JsonObject> {
         val requestBody = JsonObject().apply {
-
             addProperty("pergunta", pergunta)
             addProperty("id_cuidador", id_cuidador)
         }
 
-        return apiService.createRelatorio(requestBody)
+        return apiService.createPergunta(requestBody)
 
     }
 }
