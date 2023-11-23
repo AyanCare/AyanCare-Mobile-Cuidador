@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen.LinkedAccountsScreen
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen.profileCaregiver.screen.ProfileCaregiverScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.screen.CadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.AddExperienceScreen
@@ -28,7 +29,6 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorioHumor.
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorioHumor.screen.RelatoriosHumorScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.SettingsScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.codigoPaciente.screen.PatientCodeScreen
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.LinkedAccountsScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.responsible.AddResponsibleScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.responsible.ResponsibleScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.sugestao.SuggestionScreen
@@ -166,6 +166,11 @@ class SplashActivity : ComponentActivity() {
 
                         //PERFIL
 
+
+                        //CONEXAO
+                        composable("linked_accounts_screen"){
+                            LinkedAccountsScreen(navController = navController, lifecycleScope = lifecycleScope, localStorage = localStorage)
+                        }
                     }
                 }
             }

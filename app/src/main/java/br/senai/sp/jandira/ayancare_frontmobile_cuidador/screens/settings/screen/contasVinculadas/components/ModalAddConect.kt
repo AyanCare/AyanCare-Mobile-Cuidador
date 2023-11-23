@@ -30,10 +30,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.conectar.ConectarResponse
-import br.senai.sp.jandira.ayancare_frontmobile.retrofit.conectar.service.Conectar
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.TextFieldNumber
@@ -47,7 +45,6 @@ import retrofit2.Response
 fun ModalAddConect(
     isDialogVisibleConect: Boolean,
     navController: NavController,
-    lifecycleScope: LifecycleCoroutineScope,
     nav: String
 ) {
 
@@ -55,15 +52,11 @@ fun ModalAddConect(
 
     val array = CuidadorRepository(context = context).findUsers()
 
-    val paciente = array[0]
-    var id = paciente.id.toLong()
+    val cuidador = array[0]
+    var id = cuidador.id.toLong()
 
     var idState by remember {
         mutableStateOf("")
-    }
-
-    var listCuidadores by remember {
-        mutableStateOf<List<Conectar>>(emptyList())
     }
 
     Column(
@@ -82,7 +75,7 @@ fun ModalAddConect(
                 shape = RoundedCornerShape(5.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(30.dp),
+                    modifier = Modifier.padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
@@ -93,12 +86,20 @@ fun ModalAddConect(
                         color = Color(0xFF000000),
                         textAlign = TextAlign.Center
                     )
+                    Text(
+                        text = "Caso esteja com duvida, vá no APP do paciente e procure por código do paciente",
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins)),
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFF929292),
+                        textAlign = TextAlign.Center
+                    )
 
                     Spacer(modifier = Modifier.height(32.dp))
 
                     TextFieldNumber(
                         valor = idState,
-                        label = "ID do paciente",
+                        label = "Código do Paciente",
                         onValueChange = { idState = it }
                     )
 
@@ -109,7 +110,7 @@ fun ModalAddConect(
                             //Cria uma chamada para o endpoint
                             var call = RetrofitFactory.getConectar().createConect(id.toInt(), idState.toInt())
 
-                            Log.e("TAG", "ModalAddConect: $id + $idState", )
+                            Log.e("TAG", "ModalAddConect: $id + $idState")
 
                             call.enqueue(object : Callback<ConectarResponse> {
                                 override fun onResponse(

@@ -4,5 +4,5 @@ import br.senai.sp.jandira.ayancare_frontmobile.retrofit.conectar.service.Conect
 
 data class ConectarResponse(
     val status: Int,
-    val cuidadores: List<Conectar>
+    val conexao: List<Conectar>
 )
