@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen
+package br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -45,6 +45,7 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactor
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.components.CardLinkedAccounts
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.components.FloatingActionButtonConectarContas
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.components.ModalDeleteConect
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
 import retrofit2.Call
 import retrofit2.Callback
@@ -60,12 +61,26 @@ fun LinkedAccountsScreen(
 
     val array = CuidadorRepository(context = context).findUsers()
 
-    val paciente = array[0]
-    var id = paciente.id.toLong()
+    val cuidador = array[0]
+    var id = cuidador.id.toLong()
 
-    var listCuidadores by remember {
-        mutableStateOf<List<Conectar>>(emptyList())
+    var listPacientes by remember {
+        mutableStateOf(
+            listOf(
+                Conectar(
+                    0,
+                    "",
+                    0,
+                    "",
+                    "",
+                    0,
+                    ""
+                )
+            )
+        )
     }
+
+    var isDialogVisibleConect by remember { mutableStateOf(false) }
 
     //Cria uma chamada para o endpoint
     var call = RetrofitFactory.getConectar().getConectar(id.toInt())
@@ -75,11 +90,12 @@ fun LinkedAccountsScreen(
             call: Call<ConectarResponse>,
             response: Response<ConectarResponse>
         ) {
+            Log.i("teste de conexao", "onResponse: ${response.body()}")
             if (response.body()!!.status == 404) {
                 Log.e("TAG", "a resposta está nula")
-                listCuidadores = emptyList()
+                listPacientes = emptyList()
             } else {
-                listCuidadores = response.body()!!.cuidadores
+                listPacientes = response.body()!!.conexao
             }
         }
         override fun onFailure(call: Call<ConectarResponse>, t: Throwable) {
@@ -88,7 +104,7 @@ fun LinkedAccountsScreen(
 
     })
 
-    if (listCuidadores.isEmpty()) {
+    if (listPacientes.isEmpty()) {
         Surface(
             color = Color(248, 240, 236)
         ) {
@@ -197,25 +213,32 @@ fun LinkedAccountsScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     LazyColumn(){
-                        items(listCuidadores){
+                        items(listPacientes){
                             CardLinkedAccounts(
-                                onUnlinkClick = {  },
+                                onUnlinkClick = {
+                                    isDialogVisibleConect = true
+                                },
                                 onProfileClick = {
+                                    localStorage.salvarValor(context, it.id_paciente.toString(), "id_paciente_conexao")
                                     navController.navigate("profile_caregiver_screen")
-                                    localStorage.salvarValor( context, it.id.toString(), "id_cuidador" )
-                                                 },
-                                nome = it.nome,
-                                id = it.id
-                                //foto =
+                                },
+                                nome = it.paciente,
+                                id = it.id_paciente,
+                                foto = it.foto_paciente
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                         }
+                    }
+                    if (isDialogVisibleConect) {
+                        ModalDeleteConect(
+                            isDialogVisibleConect = false,
+                            localStorage = localStorage,
+                            navController = navController
+                        )
                     }
                 }
             }
             FloatingActionButtonConectarContas(navController, lifecycleScope)
         }
     }
-
-
 }

@@ -1,6 +1,5 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,13 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
+import coil.compose.AsyncImage
 
 @Composable
 fun CardLinkedAccounts(
@@ -44,7 +43,7 @@ fun CardLinkedAccounts(
     onProfileClick: () -> Unit,
     nome: String,
     id: Int,
-    //foto: Painter
+    foto: String
 ) {
     var isExpanded by remember { mutableStateOf(false)}
 
@@ -61,9 +60,9 @@ fun CardLinkedAccounts(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.relogio),
-                    contentDescription = "User Image",
+                AsyncImage(
+                    model = "$foto",
+                    contentDescription = "",
                     modifier = Modifier
                         .size(60.dp)
                         .clip(CircleShape)

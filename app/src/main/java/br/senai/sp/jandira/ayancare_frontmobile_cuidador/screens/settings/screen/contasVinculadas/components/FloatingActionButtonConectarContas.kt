@@ -78,7 +78,6 @@ fun FloatingActionButtonConectarContas(
                 ModalAddConect(
                     isDialogVisibleConect = false,
                     navController = navController,
-                    lifecycleScope = lifecycleScope,
                     nav = "linked_accounts_screen"
                 )
             }
