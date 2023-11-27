@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.components
+package br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.components
 
 import android.util.Log
 import android.widget.Toast
@@ -52,8 +52,8 @@ fun ModalAddConect(
 
     val array = CuidadorRepository(context = context).findUsers()
 
-    val cuidador = array[0]
-    var id = cuidador.id.toLong()
+    val cuidaddor = array[0]
+    var id = cuidaddor.id.toLong()
 
     var idState by remember {
         mutableStateOf("")
@@ -87,7 +87,7 @@ fun ModalAddConect(
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = "Caso esteja com duvida, vá no APP do paciente e procure por código do paciente",
+                        text = "Caso esteja com duvida onde está o vá no APP do cuidador e procure por código do paciente",
                         fontSize = 12.sp,
                         fontFamily = FontFamily(Font(R.font.poppins)),
                         fontWeight = FontWeight(600),

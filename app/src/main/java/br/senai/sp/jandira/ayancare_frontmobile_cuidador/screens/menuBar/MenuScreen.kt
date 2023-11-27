@@ -25,18 +25,20 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.menuBar.components.IconDefault
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen(navRotasController: NavController) {
+fun MainScreen(navRotasController: NavController, localStorage: Storage) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
     ) {
         BottomNavGraph(
             navController = navController,
-            navRotasController = navRotasController
+            navRotasController = navRotasController,
+            localStorage = localStorage
         )
     }
 }

@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
+import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.components.ModalAddConect
 
 @Composable
 fun FloatingActionButtonConectarContas(

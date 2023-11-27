@@ -25,6 +25,10 @@ import androidx.compose.material.icons.filled.ThumbUpOffAlt
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.components.CardSettings
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.components.MyBottomSheet
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.criacaoTabela.Cuidador
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.funcaoQueChamaSqlLite.deleteUserSQLite
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
@@ -61,6 +66,8 @@ fun SettingsScreen(
 
         id = array.id.toInt()
     }
+
+    var isBottomSheetVisible by remember { mutableStateOf(false) }
 
     Surface(
         color = Color(248, 240, 236)
@@ -153,7 +160,7 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             CardSettings(
-                imageVector = Icons.Default.StarOutline,
+                imageVector = Icons.Default.SupervisedUserCircle,
                 text = "Desvincular conta",
                 onClick = {
                     navController.navigate("emergencia_screen")
@@ -176,8 +183,7 @@ fun SettingsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            deleteUserSQLite(context = context, id.toInt())
-                            navController.navigate("login_screen")
+                            isBottomSheetVisible = true
                         },
                     fontSize = 16.sp,
                     lineHeight = 16.sp,
@@ -188,6 +194,14 @@ fun SettingsScreen(
                 )
             }
 
+        }
+
+        if (isBottomSheetVisible) {
+            MyBottomSheet(
+                isOpen = isBottomSheetVisible,
+                onDismiss = { isBottomSheetVisible = false },
+                navController
+            )
         }
     }
 }
