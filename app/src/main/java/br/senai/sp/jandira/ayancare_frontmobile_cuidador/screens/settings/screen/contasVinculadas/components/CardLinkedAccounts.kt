@@ -96,13 +96,13 @@ fun CardLinkedAccounts(
                     ) {
                         if (isExpanded) {
                             Icon(
-                                imageVector = Icons.Default.ArrowDropDown,
+                                imageVector = Icons.Default.ArrowDropUp,
                                 contentDescription = "",
                                 modifier = Modifier.size(30.dp)
                             )
                         } else {
                             Icon(
-                                imageVector = Icons.Default.ArrowDropUp,
+                                imageVector = Icons.Default.ArrowDropDown,
                                 contentDescription = "",
                                 modifier = Modifier.size(30.dp)
                             )

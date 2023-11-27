@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 
 @Composable
 fun CardPaciente(
@@ -44,7 +45,6 @@ fun CardPaciente(
     nome: String,
     id: Int,
     foto: String,
-    ano: Int
 ) {
     var isExpanded by remember { mutableStateOf(false) }
 
@@ -61,15 +61,8 @@ fun CardPaciente(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-//                AsyncImage(
-//                    model = "$foto",
-//                    contentDescription = "",
-//                    modifier = Modifier
-//                        .size(40.dp)
-//                        .clip(CircleShape)
-//                )
-                Image(
-                    imageVector = Icons.Default.Image,
+                AsyncImage(
+                    model = "$foto",
                     contentDescription = "",
                     modifier = Modifier
                         .size(40.dp)
@@ -102,14 +95,14 @@ fun CardPaciente(
                                 fontWeight = FontWeight(400),
                                 color = Color(0xFF9986BD)
                             )
-                            Text(
-                                text = "$ano anos",
-                                fontSize = 12.sp,
-                                lineHeight = 16.sp,
-                                //fontFamily = FontFamily(Font(R.font.manrope)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF9986BD)
-                            )
+//                            Text(
+//                                text = "$ano anos",
+//                                fontSize = 12.sp,
+//                                lineHeight = 16.sp,
+//                                //fontFamily = FontFamily(Font(R.font.manrope)),
+//                                fontWeight = FontWeight(400),
+//                                color = Color(0xFF9986BD)
+//                            )
                         }
 
                     }
@@ -119,13 +112,13 @@ fun CardPaciente(
                     ) {
                         if (isExpanded) {
                             Icon(
-                                imageVector = Icons.Default.KeyboardArrowDown,
+                                imageVector = Icons.Default.KeyboardArrowUp,
                                 contentDescription = "",
                                 modifier = Modifier.size(30.dp)
                             )
                         } else {
                             Icon(
-                                imageVector = Icons.Default.KeyboardArrowUp,
+                                imageVector = Icons.Default.KeyboardArrowDown,
                                 contentDescription = "",
                                 modifier = Modifier.size(30.dp)
                             )
@@ -172,22 +165,6 @@ fun CardPaciente(
                             color = Color(0xFFFFFFFF)
                         )
                     }
-                    Spacer(modifier = Modifier.width(20.dp))
-                    Button(
-                        onClick = onProfileClick,
-                        modifier = Modifier
-                            .width(150.dp)
-                            .height(35.dp),
-                        colors = ButtonDefaults.buttonColors(Color(0xFF35225F))
-                    ) {
-                        Text(
-                            text = "Abrir Perfil",
-                            fontSize = 12.sp,
-                            //fontFamily = FontFamily(Font(R.font.poppins)),
-                            fontWeight = FontWeight(600),
-                            color = Color(0xFFFFFFFF)
-                        )
-                    }
                 }
             }
         }
@@ -208,6 +185,5 @@ fun CardPacientePreview() {
         nome = "Janice Nelson",
         id = 1597,
         foto = "it.foto_cuidador",
-        ano = 84
     )
 }

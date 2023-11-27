@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitFactory {
 
-    private const val BASE_URL = "http://10.107.144.24:8080"
+    private const val BASE_URL = "http://10.107.144.2:8080"
     //private const val BASE_URL = "https://ayancare-api.cyclic.cloud"
     //private const val BASE_URL = "http://192.168.0.117:8080" //192.168.0.120
     fun getInstance(): Retrofit{

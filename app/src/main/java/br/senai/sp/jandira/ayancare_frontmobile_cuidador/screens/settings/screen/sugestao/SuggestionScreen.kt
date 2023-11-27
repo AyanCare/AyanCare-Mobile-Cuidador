@@ -136,7 +136,9 @@ fun SuggestionScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     DefaultButton(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+
+                        },
                         text = "Adicionar"
                     )
                     Spacer(modifier = Modifier.height(25.dp))
