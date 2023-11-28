@@ -27,8 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.senai.sp.jandira.ayancare_frontmobile.R
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.notificacoes.components.CardNotification
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 
 @Composable
 fun NotificationScreen(

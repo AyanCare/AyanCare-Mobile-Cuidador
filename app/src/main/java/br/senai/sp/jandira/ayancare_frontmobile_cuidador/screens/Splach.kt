@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen.LinkedAccountsScreen
+import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.notificacoes.screen.NotificationScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.screen.ProfileCaregiverScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.screen.CadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.AddExperienceScreen
@@ -107,6 +108,10 @@ class SplashActivity : ComponentActivity() {
 
                         composable("responsible_screen"){
                             ResponsibleScreen(navController = navController, navRotasController = navController)
+                        }
+
+                        composable("notification_screen"){
+                            NotificationScreen(navController)
                         }
 
                         composable("add_responsible_screen"){

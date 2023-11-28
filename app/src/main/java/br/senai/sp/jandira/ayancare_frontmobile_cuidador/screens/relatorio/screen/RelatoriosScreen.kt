@@ -60,10 +60,20 @@ fun RelatoriosScreen(
                 Relatorio(
                     0,
                     CuidadorRelatorio(
-                        0, "", "", "", "", ""
+                        0,
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
                     ),
                     PacienteRelatorio(
-                        0, "", "", "", "", ""
+                        0,
+                        ""
+                        , "",
+                        "",
+                        "",
+                        ""
                     ),
                     "",
                     "",
