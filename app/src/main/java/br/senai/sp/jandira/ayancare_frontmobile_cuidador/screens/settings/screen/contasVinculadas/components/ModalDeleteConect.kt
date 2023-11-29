@@ -29,23 +29,29 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.conectar.service.DesativarContaResponse
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun ModalDeleteConect(
     isDialogVisibleConect: Boolean,
     navController: NavController,
-    localStorage: Storage
+    localStorage: Storage,
+    id_cuidador: Int
 ) {
 
     val context = LocalContext.current
     val array = CuidadorRepository(context = context).findUsers()
 
-    val cuidador = array[0]
-    var id = cuidador.id.toLong()
+    val paciente = array[0]
+    var id = paciente.id.toLong()
 
-    val id_paciente = localStorage.lerValor(context, "id_paciente_conexao")
+    //val id_cuidador = localStorage.lerValor(context, "id_cuidador_conexao")
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -85,21 +91,21 @@ fun ModalDeleteConect(
                         Button(
                             onClick = {
 
-                                Log.e("dsdsfa", "ModalDeleteConect: $id + $id_paciente", )
+                                Log.e("dsdsfa", "ModalDeleteConect: $id + $id_cuidador")
 
-//                                var call = RetrofitFactory.getConectar().updateConect(id.toInt(), id_cuidador!!.toInt())
-//
-//                                call.enqueue(object : Callback<DesativarContaResponse> {
-//                                    override fun onResponse(
-//                                        call: Call<DesativarContaResponse>,
-//                                        response: Response<DesativarContaResponse>
-//                                    ) {
-//                                        Log.e("deleteConta", "onResponse: ${response.body()}")
-//                                    }
-//                                    override fun onFailure(call: Call<DesativarContaResponse>, t: Throwable) {
-//                                        Log.i("deleteConta", "onFailure: ${t.message}")
-//                                    }
-//                                })
+                                var call = RetrofitFactory.getConectar().updateConect(id.toInt(), id_cuidador)
+
+                                call.enqueue(object : Callback<DesativarContaResponse> {
+                                    override fun onResponse(
+                                        call: Call<DesativarContaResponse>,
+                                        response: Response<DesativarContaResponse>
+                                    ) {
+                                        Log.e("deleteConta", "onResponse: ${response.body()}")
+                                    }
+                                    override fun onFailure(call: Call<DesativarContaResponse>, t: Throwable) {
+                                        Log.i("deleteConta", "onFailure: ${t.message}")
+                                    }
+                                })
                                 navController.navigate("linked_accounts_screen")
                             },
                             modifier = Modifier
