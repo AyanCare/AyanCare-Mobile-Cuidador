@@ -233,7 +233,8 @@ fun LinkedAccountsScreen(
                         ModalDeleteConect(
                             isDialogVisibleConect = false,
                             localStorage = localStorage,
-                            navController = navController
+                            navController = navController,
+                            id_cuidador = listPacientes[0].id_paciente
                         )
                     }
                 }

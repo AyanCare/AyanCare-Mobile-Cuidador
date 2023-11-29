@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.PacienteResponse
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.service.Paciente
-import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen.profileCaregiver.components.CardTask
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
@@ -214,7 +213,7 @@ fun ProfileCaregiverScreen(
                 fontWeight = FontWeight(500),
                 color = Color(0xFF35225F)
             )
-            
+
         }
 
 
