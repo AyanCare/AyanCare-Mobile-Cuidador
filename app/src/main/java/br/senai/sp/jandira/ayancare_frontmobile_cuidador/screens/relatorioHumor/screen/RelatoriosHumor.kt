@@ -137,7 +137,6 @@ fun RelatoriosHumorScreen(
             LazyColumn() {
                 items(listTesteHumor) {
                     CardRelatorio(
-                        nome= it.paciente,
                         text = it.observacao,
                         data = it.data,
                         horario = it.horario,
