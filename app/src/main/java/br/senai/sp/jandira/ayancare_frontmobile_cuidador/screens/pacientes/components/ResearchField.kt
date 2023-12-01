@@ -1,14 +1,11 @@
-package br.senai.sp.jandira.ayancare_frontmobile.screens.AddRemedy.components
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.components
 
 import android.util.Log
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,12 +28,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.conectar.ConectarResponse
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.conectar.service.Conectar
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.components.CardPaciente
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,6 +40,7 @@ import retrofit2.Response
 
 @Composable
 fun ResearchField(
+    navController: NavController,
     localStorage: Storage,
 ) {
     val context = LocalContext.current
@@ -139,8 +136,12 @@ fun ResearchField(
             } else {
                 filteredList.firstOrNull()?.let { paciente ->
                     CardPaciente(
-                        onUnlinkClick = { /*TODO*/ },
-                        onProfileClick = { /*TODO*/ },
+                        onUnlinkClick = {
+
+                        },
+                        onProfileClick = {
+                            navController.navigate("Calendar_screen")
+                        },
                         nome = paciente.paciente,
                         id = paciente.id_paciente,
                         foto = paciente.foto_paciente
@@ -153,14 +154,14 @@ fun ResearchField(
                     CardPaciente(
                         onUnlinkClick = {
                             isDialogVisibleConect = true
+
                         },
                         onProfileClick = {
-                            localStorage.salvarValor(context, paciente.id_paciente.toString(), "id_paciente_conexao")
-                            //navController.navigate("profile_caregiver_screen")
+                            navController.navigate("Calendar_screen")
                         },
                         nome = paciente.paciente,
                         id = paciente.id_paciente,
-                        foto = paciente.foto_paciente,
+                        foto = paciente.foto_paciente
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                 }

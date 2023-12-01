@@ -165,7 +165,7 @@ fun LinkedAccountsScreen(
                     )
                 }
             }
-            FloatingActionButtonConectarContas(navController, lifecycleScope)
+            FloatingActionButtonConectarContas(navController, localStorage,lifecycleScope )
         }
     }else{
         Surface(
@@ -215,11 +215,18 @@ fun LinkedAccountsScreen(
                     LazyColumn(){
                         items(listPacientes){
                             CardLinkedAccounts(
+                                onClick = {
+                                    localStorage.salvarValor(context, it.id_paciente.toString(), "id_paciente_conexao")
+                                    localStorage.salvarValor(context, it.paciente, "nome_paciente_conexao")
+                                },
                                 onUnlinkClick = {
+                                    localStorage.salvarValor(context, it.id_paciente.toString(), "id_paciente_conexao")
+                                    localStorage.salvarValor(context, it.paciente, "nome_paciente_conexao")
                                     isDialogVisibleConect = true
                                 },
                                 onProfileClick = {
                                     localStorage.salvarValor(context, it.id_paciente.toString(), "id_paciente_conexao")
+                                    localStorage.salvarValor(context, it.paciente, "nome_paciente_conexao")
                                     navController.navigate("profile_caregiver_screen")
                                 },
                                 nome = it.paciente,
@@ -228,18 +235,18 @@ fun LinkedAccountsScreen(
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                         }
+
                     }
                     if (isDialogVisibleConect) {
                         ModalDeleteConect(
                             isDialogVisibleConect = false,
                             localStorage = localStorage,
-                            navController = navController,
-                            id_cuidador = listPacientes[0].id_paciente
+                            navController = navController
                         )
                     }
                 }
             }
-            FloatingActionButtonConectarContas(navController, lifecycleScope)
+            FloatingActionButtonConectarContas(navController, localStorage,lifecycleScope)
         }
     }
 }

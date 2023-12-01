@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,10 @@ import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,11 +33,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CardTask
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.notification.NotificacaoResponse
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.notification.service.Notificacao
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.BoxProfile
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CircleProfile
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CardTask
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun ProfileScreen(
@@ -43,6 +54,14 @@ fun ProfileScreen(
 
     val scrollState = rememberScrollState()
 
+    var listNotificacoes by remember {
+        mutableStateOf<List<Notificacao>>(emptyList())
+    }
+
+
+
+
+
     val array = CuidadorRepository(context = context).findUsers()
 
     val cuidador = array[0]
@@ -50,6 +69,26 @@ fun ProfileScreen(
     var foto = cuidador.foto
     var nome = cuidador.nome
     var descricao = cuidador.descricaoExperiencia
+
+
+
+    //Cria uma chamada para o endpoint
+    var call = RetrofitFactory.getNotificacao().getNotificacaobyIdCuidador(id.toInt())
+
+    call.enqueue(object : Callback<NotificacaoResponse> {
+        override fun onResponse(
+            call: Call<NotificacaoResponse>,
+            response: Response<NotificacaoResponse>
+        ) {
+            Log.e("TAG", "onResponse:${response.body()} ")
+            listNotificacoes = response.body()!!.notificacao
+            Log.e("TAG", "onResponse:$listNotificacoes")
+        }
+        override fun onFailure(call: Call<NotificacaoResponse>, t: Throwable) {
+            Log.i("ds3t", "onFailure: ${t.message}")
+        }
+
+    })
 
     Surface(
         color = Color(248, 240, 236)
@@ -99,7 +138,6 @@ fun ProfileScreen(
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
-
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -107,14 +145,27 @@ fun ProfileScreen(
                         .background(Color.White),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = descricao,
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFF9986BD),
-                        textAlign = TextAlign.Center
-                    )
+                    if (descricao.isEmpty()){
+
+                        Text(
+                            text = "Você não tem nenhuma descirção",
+                            fontSize = 14.sp,
+                            fontFamily = FontFamily(Font(R.font.poppins)),
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFF9986BD),
+                            textAlign = TextAlign.Center
+                        )
+
+                    }else{
+                        Text(
+                            text = descricao,
+                            fontSize = 14.sp,
+                            fontFamily = FontFamily(Font(R.font.poppins)),
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFF9986BD),
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -127,25 +178,15 @@ fun ProfileScreen(
                     color = Color(0xFF35225F)
                 )
                 Spacer(modifier = Modifier.height(15.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
-                Spacer(modifier = Modifier.height(10.dp))
-                CardTask()
+                for (notificacao in listNotificacoes){
+
+                    CardTask(
+                        nome = notificacao.nome,
+                        dia = notificacao.data_criacao,
+                        hora = notificacao.hora_criacao
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
             }
         }
     }

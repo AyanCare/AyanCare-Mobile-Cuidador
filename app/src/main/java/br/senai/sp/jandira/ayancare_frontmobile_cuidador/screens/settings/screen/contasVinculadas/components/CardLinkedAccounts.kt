@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -41,6 +44,7 @@ import coil.compose.AsyncImage
 fun CardLinkedAccounts(
     onUnlinkClick: () -> Unit,
     onProfileClick: () -> Unit,
+    onClick: () -> Unit,
     nome: String,
     id: Int,
     foto: String
@@ -50,7 +54,10 @@ fun CardLinkedAccounts(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { isExpanded = !isExpanded },
+            .clickable {
+                isExpanded = !isExpanded
+                onClick()
+            },
         //elevation = 4.dp
     ) {
         Column(
@@ -60,13 +67,26 @@ fun CardLinkedAccounts(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                AsyncImage(
-                    model = "$foto",
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(60.dp)
-                        .clip(CircleShape)
-                )
+                if (foto == null || foto == "undefined"){
+                    Image(
+                        painter = painterResource(id = R.drawable.perfil_padrao),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                }else{
+                    AsyncImage(
+                        model = "$foto",
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+
                 Spacer(modifier = Modifier.width(16.dp))
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -96,13 +116,13 @@ fun CardLinkedAccounts(
                     ) {
                         if (isExpanded) {
                             Icon(
-                                imageVector = Icons.Default.ArrowDropUp,
+                                imageVector = Icons.Default.ArrowDropDown,
                                 contentDescription = "",
                                 modifier = Modifier.size(30.dp)
                             )
                         } else {
                             Icon(
-                                imageVector = Icons.Default.ArrowDropDown,
+                                imageVector = Icons.Default.ArrowDropUp,
                                 contentDescription = "",
                                 modifier = Modifier.size(30.dp)
                             )

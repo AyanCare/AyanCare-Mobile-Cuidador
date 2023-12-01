@@ -12,26 +12,27 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.components.ResearchField
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen.LinkedAccountsScreen
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.notificacoes.screen.NotificationScreen
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.screen.ProfileCaregiverScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.screen.CadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.AddExperienceScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.FinalizarCadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.login.screen.LoginScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.menuBar.BottomBarScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.menuBar.MainScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.screen.PacienteScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.screen.calendar.screen.CalendarScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.RelatoriosScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.addRelatorio.screen.AddRelatorioScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen.AddQuestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen.QuestionScreen
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.view.RelatorioScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.view.ViewQuestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorioHumor.screen.RelatorioHumorScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorioHumor.screen.RelatoriosHumorScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.SettingsScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.codigoPaciente.screen.PatientCodeScreen
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.responsible.AddResponsibleScreen
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.responsible.ResponsibleScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.screen.ProfileCaregiverScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.sugestao.SuggestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telaPrincipal.screen.TelaPrincipalScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telasInstrucoes.telaInstrucao1.screen.TelaInstrucao1Screen
@@ -106,16 +107,8 @@ class SplashActivity : ComponentActivity() {
                             SettingsScreen(navController = navController, navRotasController = navController)
                         }
 
-                        composable("responsible_screen"){
-                            ResponsibleScreen(navController = navController, navRotasController = navController)
-                        }
-
                         composable("notification_screen"){
                             NotificationScreen(navController)
-                        }
-
-                        composable("add_responsible_screen"){
-                            AddResponsibleScreen(navController = navController, lifecycleScope = lifecycleScope)
                         }
 
                         composable("codigo_paciente_screen"){
@@ -138,11 +131,6 @@ class SplashActivity : ComponentActivity() {
                         composable("relatorios_screen") {
                             RelatoriosScreen(navController = navController, localStorage)
                         }
-
-                        composable("relatorio_screen") {
-                            RelatorioScreen(navController = navController, localStorage)
-                        }
-
 
                         composable("add_relatorio_screen") {
                             AddRelatorioScreen(navController = navController,lifecycleScope = lifecycleScope,localStorage)
@@ -171,10 +159,14 @@ class SplashActivity : ComponentActivity() {
 
                         //PERFIL
 
+                        //PACIENTES
 
-                        //CONEXAO
-                        composable("linked_accounts_screen"){
-                            LinkedAccountsScreen(navController = navController, lifecycleScope = lifecycleScope, localStorage = localStorage)
+                        composable("ResearchField"){
+                            ResearchField(navController = navController,localStorage = localStorage)
+                        }
+
+                        composable("Calendar_screen"){
+                            CalendarScreen(navController = navController, localStorage)
                         }
                     }
                 }

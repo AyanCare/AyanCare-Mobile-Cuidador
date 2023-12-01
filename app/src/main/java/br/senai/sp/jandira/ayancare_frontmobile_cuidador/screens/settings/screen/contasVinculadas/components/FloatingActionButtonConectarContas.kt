@@ -25,10 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.components.ModalAddConect
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 
 @Composable
 fun FloatingActionButtonConectarContas(
     navController: NavController,
+    localStorage: Storage,
     lifecycleScope: LifecycleCoroutineScope,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -79,6 +81,7 @@ fun FloatingActionButtonConectarContas(
                 ModalAddConect(
                     isDialogVisibleConect = false,
                     navController = navController,
+                    localStorage = localStorage,
                     nav = "linked_accounts_screen"
                 )
             }
