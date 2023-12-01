@@ -13,6 +13,9 @@ interface RelatorioService {
     @GET("/v1/ayan/relatorios/")
     fun getRelatorioByIdPaciente(@Query("idPaciente") idPaciente: Int): retrofit2.Call<RelatorioResponse>
 
+    @GET("/v1/ayan/relatorios/")
+    fun getRelatorioByIdPacienteIdCuidador(@Query("idPaciente") idPaciente: Int, @Query("idCuidador") idCuidador: Int): retrofit2.Call<RelatorioResponse>
+
     @Headers("Content-Type: application/json")
     @POST("/v1/ayan/relatorio")
     suspend fun createRelatorio(@Body body: JsonObject): retrofit2.Response<JsonObject>

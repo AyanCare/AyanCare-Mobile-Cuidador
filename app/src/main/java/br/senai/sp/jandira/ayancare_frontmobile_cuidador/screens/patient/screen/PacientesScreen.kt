@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.screen
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.patient.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,13 +16,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.components.ResearchField
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.patient.components.ResearchField
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 
 @Composable
 fun PacienteScreen(
     navController: NavController,
-    localStorage: Storage
+    localStorage: Storage,
+    navRotasController: NavController
 ) {
 
     Surface(
@@ -41,7 +42,9 @@ fun PacienteScreen(
                 color = Color(0xFF35225F)
             )
             Spacer(modifier = Modifier.height(15.dp))
-                ResearchField(localStorage = localStorage, navController = navController)
+                ResearchField(localStorage = localStorage, navController = navController,
+                    navRotasController = navRotasController
+                )
         }
     }
 }
