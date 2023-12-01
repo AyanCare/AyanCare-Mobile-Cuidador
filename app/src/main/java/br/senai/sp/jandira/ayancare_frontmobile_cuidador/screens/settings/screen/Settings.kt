@@ -119,13 +119,6 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             CardSettings(
-                imageVector = Icons.Default.Person,
-                text = "Perfil",
-                onClick = {
-                    navRotasController.navigate("responsible_screen")
-                }
-            )
-            CardSettings(
                 imageVector = Icons.Default.People,
                 text = "Contas Vinculadas",
                 onClick = {

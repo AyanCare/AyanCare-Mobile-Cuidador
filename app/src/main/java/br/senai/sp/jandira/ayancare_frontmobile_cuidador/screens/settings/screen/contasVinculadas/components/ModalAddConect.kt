@@ -36,7 +36,10 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.TextFieldNumber
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.components.ModalAtivarNovamente
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,8 +48,10 @@ import retrofit2.Response
 fun ModalAddConect(
     isDialogVisibleConect: Boolean,
     navController: NavController,
+    localStorage:Storage,
     nav: String
 ) {
+
 
     val context = LocalContext.current
 
@@ -58,6 +63,19 @@ fun ModalAddConect(
     var idState by remember {
         mutableStateOf("")
     }
+
+    var nomeState by remember {
+        mutableStateOf("")
+    }
+
+    //Vincular conta novamente
+    var isDialogVisibleAtivarNovamente by remember { mutableStateOf(false) }
+
+    val id_cuidador = localStorage.lerValor(context, "id_cuidador_conexao")
+    val nome_cuidador = localStorage.lerValor(context, "nome_cuidador_conexao")
+
+
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -110,7 +128,7 @@ fun ModalAddConect(
                             //Cria uma chamada para o endpoint
                             var call = RetrofitFactory.getConectar().createConect(id.toInt(), idState.toInt())
 
-                            Log.e("TAG", "ModalAddConect: $id + $idState")
+                            Log.e("add_conect", "ModalAddConect: $id + $idState")
 
                             call.enqueue(object : Callback<ConectarResponse> {
                                 override fun onResponse(
@@ -121,19 +139,46 @@ fun ModalAddConect(
                                         Toast.makeText(context, "Sucesso!!", Toast.LENGTH_SHORT).show()
                                         navController.navigate("linked_accounts_screen")
                                     }else{
-                                        Log.e("TAG", "onResponse:${response} ", )
-                                        Toast.makeText(context, "Erro id inválido!!", Toast.LENGTH_SHORT).show()
+                                        Log.e("add_conect", "onResponse:${response} ")
+                                        if (response.code() == 409){
+                                            val erro = response.errorBody()?.string()
+                                            val erroObject = JSONObject(erro)
+                                            val conexao = erroObject.getJSONObject("conexao")
+                                            val status = conexao.getInt("status")
+
+                                            nomeState = conexao.getString("paciente")
+
+                                            Log.e("Luizão", "${conexao}")
+                                            Log.e("Luizão", "${status}")
+                                            if (status == 0){
+                                                Toast.makeText(context, "Essa conexao está desativada!!", Toast.LENGTH_SHORT).show()
+                                                isDialogVisibleAtivarNovamente = true
+                                            }else{
+                                                Toast.makeText(context, "Conexao já existente!!", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }else{
+                                            Toast.makeText(context, "Erro id inválido!!", Toast.LENGTH_SHORT).show()
+                                        }
                                     }
 
                                 }
                                 override fun onFailure(call: Call<ConectarResponse>, t: Throwable) {
-                                    Log.i("ds3t", "onFailure: ${t.message}")
+                                    Log.i("add_conect", "onFailure: ${t.message}")
                                 }
 
                             })
                         },
                         text = "Salvar"
                     )
+                    if (isDialogVisibleAtivarNovamente) {
+                        ModalAtivarNovamente(
+                            isDialogVisibleConect = false,
+                            localStorage = localStorage,
+                            navController = navController,
+                            id_paciente = idState.toInt(),
+                            nome_paciente = nomeState
+                        )
+                    }
                     Spacer(modifier = Modifier.height(25.dp))
                     Text(
                         text = "Cancelar",

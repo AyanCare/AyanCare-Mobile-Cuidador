@@ -30,7 +30,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.conectar.service.DesativarContaResponse
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.conectar.service.AtivarContaResponse
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
 import retrofit2.Call
@@ -38,10 +38,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun ModalDeleteConect(
+fun ModalAtivarNovamente(
     isDialogVisibleConect: Boolean,
     navController: NavController,
     localStorage: Storage,
+    id_paciente: Int,
+    nome_paciente: String
 ) {
 
     val context = LocalContext.current
@@ -49,8 +51,11 @@ fun ModalDeleteConect(
 
     val cuidador = array[0]
     var id = cuidador.id.toLong()
+    //var nome_paciente = paciente.nome
 
-    val id_paciente = localStorage.lerValor(context, "id_paciente_conexao")
+    //val id_cuidador = localStorage.lerValor(context, "id_cuidador_conexao")
+    //val nome_cuidador = localStorage.lerValor(context, "nome_cuidador_conexao")
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -73,7 +78,7 @@ fun ModalDeleteConect(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Tem certeza que deseja desvincular?\nVocê não terá mais acesso aos dados dessa pessoa.",
+                        text = "Deseja ativar novamente sua conexão com o cuidador $nome_paciente?",
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.poppins)),
                         fontWeight = FontWeight(600),
@@ -90,19 +95,19 @@ fun ModalDeleteConect(
                         Button(
                             onClick = {
 
-                                Log.e("dsdsfa", "ModalDeleteConect: $id + $id_paciente")
+                                Log.e("ativarConta", "ModalAtivarNovamenteConect: $id + $id_paciente")
 
-                                var call = RetrofitFactory.getConectar().updateConectDesativar(id.toInt(), id_paciente!!.toInt())
+                                var call = RetrofitFactory.getConectar().updateConectAtivar(id.toInt(), id_paciente!!.toInt())
 
-                                call.enqueue(object : Callback<DesativarContaResponse> {
+                                call.enqueue(object : Callback<AtivarContaResponse> {
                                     override fun onResponse(
-                                        call: Call<DesativarContaResponse>,
-                                        response: Response<DesativarContaResponse>
+                                        call: Call<AtivarContaResponse>,
+                                        response: Response<AtivarContaResponse>
                                     ) {
-                                        Log.e("deleteConta", "onResponse: ${response.body()}")
+                                        Log.e("ativarConta", "onResponse: ${response.body()}")
                                     }
-                                    override fun onFailure(call: Call<DesativarContaResponse>, t: Throwable) {
-                                        Log.i("deleteConta", "onFailure: ${t.message}")
+                                    override fun onFailure(call: Call<AtivarContaResponse>, t: Throwable) {
+                                        Log.i("ativarConta", "onFailure: ${t.message}")
                                     }
                                 })
                                 navController.navigate("linked_accounts_screen")

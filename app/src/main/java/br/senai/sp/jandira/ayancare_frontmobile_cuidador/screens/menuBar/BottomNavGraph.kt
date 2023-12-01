@@ -21,9 +21,7 @@ fun BottomNavGraph(
         navController = navController,
         startDestination = BottomBarScreen.Home.route,
     ){
-//        composable(route = BottomBarScreen.Cadendary.route){
-//            //CalendaryScreen()
-//        }
+
         composable(route = BottomBarScreen.Stock.route){
             PacienteScreen(navController = navController, localStorage = localStorage)
         }
