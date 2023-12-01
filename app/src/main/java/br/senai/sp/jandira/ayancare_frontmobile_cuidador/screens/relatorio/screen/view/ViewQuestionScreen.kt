@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
@@ -32,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -92,40 +94,80 @@ fun ViewQuestionScreen(
     ) {
         Column(
             modifier = Modifier
-                .padding(start = 15.dp, end = 15.dp)
+                .padding(start = 15.dp, end = 15.dp, top = 20.dp)
                 .fillMaxSize()
         ) {
-            IconButton(
-                onClick = {
-                    navController.popBackStack()
-                }
+//            Row (
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(end = 50.dp),
+//                verticalAlignment = Alignment.CenterVertically,
+//                horizontalArrangement = Arrangement.SpaceBetween
+//            ){
+//                IconButton(
+//                    onClick = {
+//                        navController.navigate("relatorio_screen")
+//                    }
+//                ) {
+//                    Icon(
+//                        imageVector = Icons.Default.ArrowBackIosNew,
+//                        contentDescription = ""
+//                    )
+//                }
+//                Text(
+//                    text = "Questionário",
+//                    fontSize = 28.sp,
+//                    fontFamily = FontFamily(Font(R.font.poppins)),
+//                    fontWeight = FontWeight(600),
+//                    color = Color(0xFF35225F)
+//                )
+//            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBackIosNew,
-                    contentDescription = ""
+                IconButton(
+                    onClick = {
+                        navController.navigate("relatorio_screen")
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBackIosNew,
+                        contentDescription = ""
+                    )
+                }
+                Spacer(modifier = Modifier.width(80.dp))
+                Text(
+                    text = "Questionário",
+                    fontSize = 28.sp,
+                    lineHeight = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFF35225F),
+                    textAlign = TextAlign.Center
                 )
             }
+
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 40.dp)
+                    .padding(bottom = 20.dp)
             ) {
-                Text(
-                    text = "Questionário ",
-                    fontSize = 28.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins)),
-                    fontWeight = FontWeight(600),
-                    color = Color(0xFF35225F)
-                )
-                Spacer(modifier = Modifier.height(20.dp))
+
+                Spacer(modifier = Modifier.height(40.dp))
 
                 LazyColumn(
-                    modifier = Modifier.fillMaxHeight()
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     items(listQuestionario) {
-                        Column {
+                        Column (
+                            modifier = Modifier.fillMaxSize()
+                        ){
                             Text(
                                 text = it.pergunta,
                                 fontSize = 16.sp,

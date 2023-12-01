@@ -57,7 +57,7 @@ fun RelatorioScreen(
         ) {
             IconButton(
                 onClick = {
-                    navController.popBackStack()
+                    navController.navigate("relatorios_screen")
                 }
             ) {
                 Icon(

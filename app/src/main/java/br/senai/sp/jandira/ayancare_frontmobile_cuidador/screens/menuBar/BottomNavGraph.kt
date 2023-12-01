@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.home.screen.HomeScreen
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.screen.PacienteScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.patient.screen.PacienteScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.screen.ProfileScreen
 
 @Composable
@@ -23,7 +23,7 @@ fun BottomNavGraph(
     ){
 
         composable(route = BottomBarScreen.Stock.route){
-            PacienteScreen(navController = navController, localStorage = localStorage)
+            PacienteScreen(navController = navController, localStorage = localStorage, navRotasController)
         }
         composable(route = BottomBarScreen.Home.route){
             HomeScreen(navController = navController, navRotasController =  navRotasController)

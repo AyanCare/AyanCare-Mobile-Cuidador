@@ -42,6 +42,7 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.relatorio.serv
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.components.FloatingActionButtonRelatorio
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.components.CardRelatorio
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -84,8 +85,15 @@ fun RelatoriosScreen(
         )
     }
 
+    var id_paciente = localStorage.lerValor(context, "id_paciente")
+    Log.i("id_paciente", "Calendary: $id_paciente")
+
+    val array = CuidadorRepository(context = LocalContext.current).findUsers()
+    val cuidador = array[0]
+    val id_cuidador = cuidador.id.toLong()
+
     //Cria uma chamada para o endpoint
-    var call = RetrofitFactory.getRelatorio().getRelatorioByIdPaciente(2)
+    var call = RetrofitFactory.getRelatorio().getRelatorioByIdPacienteIdCuidador(id_paciente!!.toInt(), id_cuidador.toInt())
 
     call.enqueue(object : Callback<RelatorioResponse> {
         override fun onResponse(

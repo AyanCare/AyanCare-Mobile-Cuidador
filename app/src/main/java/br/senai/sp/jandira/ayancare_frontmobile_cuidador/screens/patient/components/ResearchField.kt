@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.components
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.patient.components
 
 import android.util.Log
 import androidx.compose.foundation.border
@@ -40,16 +40,17 @@ import retrofit2.Response
 
 @Composable
 fun ResearchField(
-    navController: NavController,
+   navController: NavController,
     localStorage: Storage,
+   navRotasController: NavController
 ) {
     val context = LocalContext.current
     var isDialogVisibleConect by remember { mutableStateOf(false) }
     var pacientes by remember { mutableStateOf("") }
-    
-    
-    
-    
+
+
+
+
     var listPacientes by remember {
         mutableStateOf(
             listOf(
@@ -137,10 +138,10 @@ fun ResearchField(
                 filteredList.firstOrNull()?.let { paciente ->
                     CardPaciente(
                         onUnlinkClick = {
-
+                            navRotasController.navigate("relatorios_screen")
                         },
                         onProfileClick = {
-                            navController.navigate("Calendar_screen")
+                            navRotasController.navigate("Calendar_screen")
                         },
                         nome = paciente.paciente,
                         id = paciente.id_paciente,
@@ -154,10 +155,11 @@ fun ResearchField(
                     CardPaciente(
                         onUnlinkClick = {
                             isDialogVisibleConect = true
-
+                            navRotasController.navigate("relatorios_screen")
                         },
                         onProfileClick = {
-                            navController.navigate("Calendar_screen")
+                            localStorage.salvarValor(context, listPacientes[0].id_paciente.toString(), "id_paciente")
+                            navRotasController.navigate("Calendar_screen")
                         },
                         nome = paciente.paciente,
                         id = paciente.id_paciente,

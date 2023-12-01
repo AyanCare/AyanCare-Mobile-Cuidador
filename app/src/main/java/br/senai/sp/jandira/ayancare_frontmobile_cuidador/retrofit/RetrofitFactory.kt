@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit
 
+import br.senai.sp.jandira.ayancare_frontmobile.retrofit.calendario.service.CalendarioService
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.conectar.service.ConectarService
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.service.CuidadorService
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.service.PacienteService
@@ -13,9 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitFactory {
 
-    private const val BASE_URL = "http://192.168.0.196:8080" //Casa
+    //private const val BASE_URL = "http://192.168.0.196:8080" //Casa
     //private const val BASE_URL = "https://ayancare-api.cyclic.cloud"
-    //private const val BASE_URL = "http://10.107.144.2:8080" //Senai
+    private const val BASE_URL = "http://10.107.144.24:8080" //Senai
     fun getInstance(): Retrofit{
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -58,6 +59,9 @@ object RetrofitFactory {
 
     fun getNotificacao(): NotificacaoService {
         return retrofitFactory.create(NotificacaoService::class.java)
+    }
+    fun getCalendario(): CalendarioService {
+        return retrofitFactory.create(CalendarioService::class.java)
     }
 
 

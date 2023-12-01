@@ -1,5 +1,6 @@
-package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.pacientes.components
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.patient.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,10 +30,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import coil.compose.AsyncImage
 
 @Composable
@@ -58,13 +62,25 @@ fun CardPaciente(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                AsyncImage(
-                    model = "$foto",
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape)
-                )
+                if (foto == null || foto == "undefined"){
+                    Image(
+                        painter = painterResource(id = R.drawable.perfil_padrao),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                }else{
+                    AsyncImage(
+                        model = "$foto",
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                }
                 Spacer(modifier = Modifier.width(16.dp))
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
