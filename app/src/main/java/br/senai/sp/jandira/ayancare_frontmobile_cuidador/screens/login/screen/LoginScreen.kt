@@ -18,6 +18,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AlternateEmail
 import androidx.compose.material.icons.filled.Password
+import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -186,23 +187,23 @@ fun LoginScreen(
     }
 
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        val permissionState: PermissionState = rememberPermissionState(
-            permission = Manifest.permission.POST_NOTIFICATIONS
-        )
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//        val permissionState: PermissionState = rememberPermissionState(
+//            permission = Manifest.permission.POST_NOTIFICATIONS
+//        )
 
-        Surface (
+        Surface(
             color = Color(248, 240, 236)
-        ){
+        ) {
             Wave()
 
-            Column (
+            Column(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .padding(top = 40.dp, start = 15.dp, end = 15.dp, bottom = 40.dp)
                     .fillMaxSize()
-            ){
+            ) {
 
                 Text(
                     text = "Olá!",
@@ -211,9 +212,9 @@ fun LoginScreen(
                     fontWeight = FontWeight(600),
                     color = Color(0xFF000000)
                 )
-                Column (
+                Column(
                     horizontalAlignment = Alignment.CenterHorizontally
-                ){
+                ) {
                     Text(
                         text = "Bem-vindo de volta!",
                         fontSize = 18.sp,
@@ -233,11 +234,11 @@ fun LoginScreen(
                 }
                 Spacer(modifier = Modifier.height(20.dp))
 
-                Column (
+                Column(
                     horizontalAlignment = Alignment.End,
                     modifier = Modifier
                         .padding(start = 20.dp, end = 20.dp)
-                ){
+                ) {
                     CustomOutlinedTextField(
                         value = emailState,
                         onValueChange = { emailState = it },
@@ -292,13 +293,13 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(40.dp))
 
 
-                Column (
+                Column(
                     modifier = Modifier.width(190.dp)
                 ) {
                     DefaultButton(
                         text = "Entrar",
                         onClick = {
-                            permissionState.launchPermissionRequest()
+                            //permissionState.launchPermissionRequest()
                             login(
                                 emailState,
                                 passwordState
@@ -316,9 +317,9 @@ fun LoginScreen(
 
                 Spacer(modifier = Modifier.height(50.dp))
 
-                Column (
+                Column(
                     horizontalAlignment = Alignment.CenterHorizontally
-                ){
+                ) {
                     Text(
                         text = "Não tem conta?",
                         fontSize = 15.sp,
@@ -341,21 +342,22 @@ fun LoginScreen(
                 }
 
             }
+//        }
+
+//    }else{
+//        val permissionState: PermissionState = rememberPermissionState(
+//            permission = Manifest.permission.POST_NOTIFICATIONS
+//        )
+//
+//        Text(text = "Aceite as notificções")
+//
+//        Button(onClick = {
+//            permissionState.launchPermissionRequest()
+//
+//        }) {
+//        }
+//
+//    }
 
         }
-    }
-
-
-
 }
-
-
-//if (!permissionState.status.isGranted) {
-//
-//
-//}
-//}else{
-//
-//    Text(text = "Aceite as notificções")
-//}
-//}

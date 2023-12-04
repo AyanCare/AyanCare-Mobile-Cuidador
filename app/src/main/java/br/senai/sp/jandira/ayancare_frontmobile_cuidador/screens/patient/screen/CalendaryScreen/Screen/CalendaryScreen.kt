@@ -55,6 +55,7 @@ fun CalendaryScreen(
     var selecionado by remember { mutableStateOf("evento") }
     val scrollState = rememberScrollState()
     var context = LocalContext.current
+
     //var listAlarme: List<Alarmes> = listOf()
 
     var listAlarme by remember {
@@ -71,7 +72,7 @@ fun CalendaryScreen(
             //verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(bottom = 80.dp)
+                .padding(bottom = 10.dp)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
@@ -144,7 +145,7 @@ fun CalendaryScreen(
         if (selecionado == "evento"){
             Column(
                 modifier = Modifier
-                    .padding(end = 15.dp, bottom = 90.dp)
+                    .padding(end = 15.dp, bottom = 20.dp)
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.End
@@ -169,7 +170,7 @@ fun CalendaryScreen(
         }else{
             Column(
                 modifier = Modifier
-                    .padding(end = 15.dp, bottom = 90.dp)
+                    .padding(end = 15.dp, bottom = 20.dp)
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.End

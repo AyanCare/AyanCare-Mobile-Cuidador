@@ -2,6 +2,7 @@ package br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit
 
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.calendario.service.CalendarioService
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.conectar.service.ConectarService
+import br.senai.sp.jandira.ayancare_frontmobile.retrofit.cor.service.CorService
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.service.CuidadorService
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.service.PacienteService
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.genero.service.GeneroService
@@ -63,6 +64,10 @@ object RetrofitFactory {
     }
     fun getCalendario(): CalendarioService {
         return retrofitFactory.create(CalendarioService::class.java)
+    }
+
+    fun getCor(): CorService {
+        return retrofitFactory.create(CorService::class.java)
     }
 
 
