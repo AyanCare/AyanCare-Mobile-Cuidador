@@ -15,8 +15,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitFactory {
 
     //private const val BASE_URL = "http://192.168.0.196:8080" //Casa
-    //private const val BASE_URL = "https://ayancare-api.cyclic.cloud"
-    private const val BASE_URL = "http://10.107.144.24:8080" //Senai
+    //private const val BASE_URL = "https://ayancare-api.cyclic.cloud" //Cyclic
+    private const val BASE_URL = "https://ayan-backend.azurewebsites.net/" //Azure
+    //private const val BASE_URL = "http://10.107.144.24:8080" //Senai
     fun getInstance(): Retrofit{
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
