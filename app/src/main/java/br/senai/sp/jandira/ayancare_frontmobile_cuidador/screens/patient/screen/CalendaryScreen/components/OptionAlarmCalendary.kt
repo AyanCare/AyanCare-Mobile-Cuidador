@@ -14,6 +14,10 @@ import androidx.compose.material.icons.filled.DeveloperMode
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,18 +28,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.calendario.service.Alarmes
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.components.MyBottomSheet
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.components.ModalAtivarNovamente
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.components.ModalDeleteConect
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
 
 @Composable
 fun OptionAlarmCalendary(
     localStorage: Storage,
-    alarmes: List<Alarmes>
+    alarmes: List<Alarmes>,
+    navController: NavController,
+    lifecycleScope: LifecycleCoroutineScope
 ) {
 
     val context = LocalContext.current
+
+    var isBottomSheetVisible by remember { mutableStateOf(false) }
 
     val array = CuidadorRepository(context = context).findUsers()
 
@@ -105,13 +118,36 @@ fun OptionAlarmCalendary(
                 val medication = alarme.medicamento
                 val time = alarme.horario
                 val status = alarme.status
+                val quantidade = alarme.quantidade
+                val medida = alarme.medida
+                val medida_sigla = alarme.medida
+
+                val subtitle = if (medida_sigla == null) {
+                    "${quantidade} ${medida} x ${medication}"
+                } else {
+                    "${quantidade} ${medida_sigla} x ${medication}"
+                }
+
                 CardCalendary(
                     value = time,
                     title = "Alarme",
-                    subtitle = " x ${medication}", //${alarme.quantidade_retirada}${alarme.medida_sigla}
+                    subtitle = subtitle,
                     status = status,
-                    width = 75
+                    width = 75,
+                    onClick = {
+                        Log.i("TAG", "OptionAlarmCalendary: cliquei")
+                        isBottomSheetVisible = true
+                    }
                 )
+                if (isBottomSheetVisible) {
+                    TomeiouNao(
+                        isOpen = isBottomSheetVisible,
+                        //navController,
+                        //localStorage,
+                        lifecycleScope,
+                        id = alarme.id
+                    )
+                }
                 Spacer(modifier = Modifier.height(10.dp))
             }
 

@@ -8,6 +8,9 @@ data class Alarmes(
     val medicamento: String,
     val horario: String,
     val intervalo: String,
+    val quantidade: Int,
+    val medida: String,
+    val medida_sigla: String,
     val id_status: Int,
     val status: String
 )

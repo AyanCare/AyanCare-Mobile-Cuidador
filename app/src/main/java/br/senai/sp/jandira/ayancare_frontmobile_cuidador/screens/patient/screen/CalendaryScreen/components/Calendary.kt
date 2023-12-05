@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -47,6 +48,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 
@@ -111,6 +114,9 @@ fun Calendary(
                         "",
                         "",
                         0,
+                        "",
+                        "",
+                        0,
                         ""
                     )
                 )
@@ -118,13 +124,70 @@ fun Calendary(
         )
     }
 
-    val array = CuidadorRepository(context = context).findUsers()
-    val cuidador = array[0]
-    var id = cuidador.id.toLong()
+//    val array = CuidadorRepository(context = context).findUsers()
+//    val cuidador = array[0]
+//    var id = cuidador.id.toLong()
 
 
-    var id_paciente = localStorage.lerValor(context, "id_paciente")
-    Log.i("id_paciente", "Calendary: $id_paciente")
+    var id = localStorage.lerValor(context, "id_paciente")
+    Log.i("id_paciente", "Calendary: $id")
+
+    LaunchedEffect(true){
+        val dataLocal: LocalDate = LocalDate.now()
+
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val dataFormatada: String = dataLocal.format(formatter)
+
+        Log.i("TAG", "Calendary:$id ")
+        Log.i("TAG", "Calendary:$dataFormatada ")
+        Log.i("TAG", "Calendary:$selectedDayOfWeek ")
+
+        var call = RetrofitFactory
+            .getCalendario()
+            .getCalendarioByIDPacienteDia_DiaSemana(
+                idPaciente = id!!.toInt(),
+                dia = dataFormatada,
+                diaSemana = SimpleDateFormat(
+                    "E",
+                    ptBrLocale
+                ).format(selectedDate.time)
+            )
+
+        call.enqueue(object : Callback<CalendarioResponse> {
+            override fun onResponse(
+                call: Call<CalendarioResponse>,
+                response: Response<CalendarioResponse>
+            ) {
+                Log.e("TAG", "onResponse: ${response.body()}")
+
+                if (response.body()!!.status == 404) {
+                    Log.e("TAG", "a resposta está nula")
+                } else {
+                    Log.e(
+                        "Teste Luiz",
+                        "onResponse: ${response.body()!!.calendario}"
+                    )
+
+                    lista = response.body()!!.calendario
+
+                    onChaneList(response.body()!!.calendario.alarmes)
+                }
+
+                Log.e("list-calendario", "onResponse: $lista")
+            }
+
+            override fun onFailure(
+                call: Call<CalendarioResponse>,
+                t: Throwable
+            ) {
+                Log.i(
+                    "list-calendario off",
+                    "onFailure: ${t.message}"
+                )
+            }
+
+        })
+    }
 
     Column(
         modifier = Modifier
@@ -249,7 +312,7 @@ fun Calendary(
                                             var call = RetrofitFactory
                                                 .getCalendario()
                                                 .getCalendarioByIDPacienteDia_DiaSemana(
-                                                    idPaciente = id_paciente!!.toInt(),
+                                                    idPaciente = id!!.toInt(),
                                                     dia = "${selectedDate.get(Calendar.DAY_OF_MONTH)}/$selectedMonth/$selectedYear",
                                                     diaSemana = "$selectedDayOfWeek"
                                                 )
@@ -318,7 +381,7 @@ fun Calendary(
                                             .getCalendarioByIDPacienteDia_DiaSemana(
                                                 dia = "${selectedDate.get(Calendar.DAY_OF_MONTH)}/$selectedMonth/$selectedYear",
                                                 diaSemana = "$selectedDayOfWeek",
-                                                idPaciente = id_paciente!!.toInt()
+                                                idPaciente = id!!.toInt()
                                             )
 
                                         call.enqueue(object : Callback<CalendarioResponse> {

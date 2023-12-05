@@ -41,14 +41,12 @@ import retrofit2.Response
 @Composable
 fun ResearchField(
    navController: NavController,
-    localStorage: Storage,
+   localStorage: Storage,
    navRotasController: NavController
 ) {
     val context = LocalContext.current
     var isDialogVisibleConect by remember { mutableStateOf(false) }
     var pacientes by remember { mutableStateOf("") }
-
-
 
 
     var listPacientes by remember {
@@ -158,7 +156,7 @@ fun ResearchField(
                             navRotasController.navigate("relatorios_screen")
                         },
                         onProfileClick = {
-                            localStorage.salvarValor(context, listPacientes[0].id_paciente.toString(), "id_paciente")
+                            localStorage.salvarValor(context, paciente.id_paciente.toString(), "id_paciente")
                             navRotasController.navigate("Calendar_screen")
                         },
                         nome = paciente.paciente,

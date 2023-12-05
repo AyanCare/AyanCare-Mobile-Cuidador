@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.calendario.service.Alarmes
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.calendario.service.EventosUnicos
@@ -51,6 +52,7 @@ fun CalendaryScreen(
     navController: NavController,
     navRotasController: NavController,
     localStorage: Storage,
+    lifecycleScope: LifecycleCoroutineScope
 ) {
     var selecionado by remember { mutableStateOf("evento") }
     val scrollState = rememberScrollState()
@@ -138,7 +140,7 @@ fun CalendaryScreen(
             } else if (selecionado == "alarme") {
                 Column {
                     Spacer(modifier = Modifier.height(15.dp))
-                    OptionAlarmCalendary(localStorage, listAlarme)
+                    OptionAlarmCalendary(localStorage, listAlarme, navController, lifecycleScope)
                 }
             }
         }

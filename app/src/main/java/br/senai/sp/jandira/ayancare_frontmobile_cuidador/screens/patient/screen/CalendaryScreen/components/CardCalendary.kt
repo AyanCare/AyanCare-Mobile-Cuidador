@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.patient.screen.CalendaryScreen.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,7 +36,8 @@ fun CardCalendary(
     title: String,
     subtitle:String,
     status: String,
-    width: Int
+    width: Int,
+    onClick: () -> Unit
 ) {
     Row (
         modifier = Modifier
@@ -42,7 +45,10 @@ fun CardCalendary(
             .background(
                 Color(0xFF35225F),
                 shape = RoundedCornerShape(4.dp)
-            ),
+            )
+            .clickable {
+                       onClick()
+            },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ){
@@ -98,7 +104,7 @@ fun CardCalendary(
                     tint = if (status == "Não tomado") Color(255, 0, 0, 255) else Color(117, 246, 146),
                     modifier = Modifier
                         .size(26.dp)
-                )
+                    )
             }
         }
     }

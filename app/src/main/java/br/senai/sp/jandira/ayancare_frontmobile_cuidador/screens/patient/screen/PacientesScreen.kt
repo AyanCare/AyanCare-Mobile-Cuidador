@@ -42,19 +42,11 @@ fun PacienteScreen(
                 color = Color(0xFF35225F)
             )
             Spacer(modifier = Modifier.height(15.dp))
-                ResearchField(localStorage = localStorage, navController = navController,
+                ResearchField(
+                    localStorage = localStorage,
+                    navController = navController,
                     navRotasController = navRotasController
                 )
         }
     }
-}
-
-
-
-@Preview
-@Composable
-fun PacienteScreenPreview() {
-
-
-    //PacienteScreen()
 }

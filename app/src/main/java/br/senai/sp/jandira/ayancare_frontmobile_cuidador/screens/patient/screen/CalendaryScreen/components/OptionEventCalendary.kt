@@ -102,7 +102,10 @@ fun OptionEventCalendary(
                     title = "${event.dia_unico} de ${event.mes}",
                     subtitle = event.nome,
                     status = "",
-                    width = 60
+                    width = 60,
+                    onClick = {
+
+                    }
                 )
                 Spacer(modifier = Modifier.height(10.dp))
             }

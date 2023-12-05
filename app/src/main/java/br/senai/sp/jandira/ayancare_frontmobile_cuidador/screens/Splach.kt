@@ -164,7 +164,7 @@ class SplashActivity : ComponentActivity() {
 
                         //PACIENTES
                         composable("Calendar_screen"){
-                            CalendaryScreen(navController = navController, navController,localStorage)
+                            CalendaryScreen(navController = navController, navController,localStorage, lifecycleScope)
                         }
 
                         composable("event_screen"){
