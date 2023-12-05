@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
@@ -34,7 +36,12 @@ import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 
 @Composable
-fun DropdownDiasSemana(isEnabled: Boolean) {
+fun DropdownDiasSemana(
+    isEnabled: Boolean,
+    onClick: () -> Unit,
+    diasSelecionados: List<String>, // Adicionando o parâmetro para receber os dias selecionados
+    onDiasSelecionadosChange: (List<String>) -> Unit // Função para atualizar os dias selecionados
+) {
     var diasSelecionados by remember { mutableStateOf(setOf<String>()) }
     var dropdownAberto by remember { mutableStateOf(false) }
 
@@ -65,13 +72,13 @@ fun DropdownDiasSemana(isEnabled: Boolean) {
                 },
                 readOnly = true,
                 textStyle = TextStyle(color = if (isEnabled) Color.Black else Color.Gray),
-                enabled = isEnabled, // Habilita ou desabilita o TextField
+                enabled = isEnabled,
                 trailingIcon = {
                     IconButton(
                         onClick = {
                             dropdownAberto = !dropdownAberto
                         },
-                        enabled = isEnabled, // Habilita ou desabilita o IconButton
+                        enabled = isEnabled,
                         modifier = Modifier.align(Alignment.CenterEnd)
                     ) {
                         Icon(
@@ -91,12 +98,14 @@ fun DropdownDiasSemana(isEnabled: Boolean) {
                 diasDaSemana.forEach { dia ->
                     val isChecked = diasSelecionados.contains(dia)
 
-                    androidx.compose.material.DropdownMenuItem(onClick = {
-                        if (isChecked) {
-                            diasSelecionados -= dia
+
+                    DropdownMenuItem(onClick = {
+                        val updatedSelectedItems = if (isChecked) {
+                            diasSelecionados - dia
                         } else {
-                            diasSelecionados += dia
+                            diasSelecionados + dia
                         }
+                        onDiasSelecionadosChange(updatedSelectedItems.toList()) // Atualizando os dias selecionados
                     }) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -105,15 +114,14 @@ fun DropdownDiasSemana(isEnabled: Boolean) {
                             Text(
                                 text = dia,
                                 fontSize = 15.sp,
-                                fontFamily = FontFamily(Font(R.font.poppins)),
-                                fontWeight = FontWeight(600),
-                                color = Color(0xFF191D23)
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black
                             )
                             if (isChecked) {
                                 Icon(
                                     imageVector = Icons.Default.Check,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = Color.Blue
                                 )
                             }
                         }
@@ -121,7 +129,9 @@ fun DropdownDiasSemana(isEnabled: Boolean) {
                 }
             }
         }
+
         Spacer(modifier = Modifier.height(5.dp))
+
         Text(
             text = "Dias selecionados: ${diasSelecionados.joinToString(", ")}",
             color = if (isEnabled) Color.Black else Color.Gray,

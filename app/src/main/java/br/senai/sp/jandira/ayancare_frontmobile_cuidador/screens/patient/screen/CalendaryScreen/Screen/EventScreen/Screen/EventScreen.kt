@@ -24,6 +24,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.Switch
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -55,6 +56,7 @@ import androidx.navigation.NavController
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.cor.CorResponse
 import br.senai.sp.jandira.ayancare_frontmobile.retrofit.cor.service.Cor
 import br.senai.sp.jandira.ayancare_frontmobile.screens.event.components.DateEvent
+import br.senai.sp.jandira.ayancare_frontmobile.screens.event.components.DropdownDiasSemana
 import br.senai.sp.jandira.ayancare_frontmobile.screens.event.components.HeaderEvent
 import br.senai.sp.jandira.ayancare_frontmobile.screens.event.components.OptionEvent
 import br.senai.sp.jandira.ayancare_frontmobile.screens.event.components.TimeTextField
@@ -93,8 +95,13 @@ fun EventScreen(
     var selectedColorId by remember { mutableStateOf<Int?>(1) }
     var selectedColorHex by remember { mutableStateOf<String?>(null) }
     val datePickerState = rememberDatePickerState()
+    var switchState by remember { mutableStateOf(false) }
 
     var selectedDrop by remember { mutableStateOf("") }
+
+    var selectedItems by remember {
+        mutableStateOf(listOf<String>())
+    }
 
 
     //VALIDAÇÕES
@@ -233,6 +240,60 @@ fun EventScreen(
         }
     }
 
+    fun eventSemanal(
+        nome: String,
+        descricao: String,
+        local: String,
+        hora: String,
+        dias: List<String>,
+        idPacienteCuidador: Int,
+        idCor: Int
+    ) {
+
+            val eventRepository = EventRepository()
+            lifecycleScope.launch {
+                val response = eventRepository.registerEventSemanal(
+                    nome,
+                    descricao,
+                    local,
+                    hora,
+                    id_paciente_cuidador = 1,
+                    dias = dias,
+                    cor_id = idCor
+                )
+                if (response.isSuccessful) {
+                    Log.e(MainActivity::class.java.simpleName, "event bem-sucedido")
+                    Log.e("event", "event: ${response.body()}")
+                    val checagem = response.body()?.get("status")
+
+                    Log.e("event", "event: ${checagem}")
+
+                    if (checagem.toString() == "404") {
+                        Toast.makeText(context, "algo está invalido", Toast.LENGTH_LONG).show()
+                    } else {
+
+                        NotificationService().showNotification(
+                            context = context,
+                            title = "Evendo criado",
+                            description = "Seu Evento foi criado com sucesso com o paciente",
+                            Icon = R.drawable.calendario
+                        )
+
+
+
+                        Toast.makeText(context, "Sucesso!!", Toast.LENGTH_SHORT).show()
+
+                        navController.navigate("main_screen")
+                    }
+                } else {
+                    val errorBody = response.errorBody()?.string()
+
+                    Log.e(MainActivity::class.java.simpleName, "Erro durante o event: $errorBody")
+                    Toast.makeText(context, "algo está invalido", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
     Surface(
         color = Color(248, 240, 236)
     ) {
@@ -274,15 +335,27 @@ fun EventScreen(
 
                         Log.e("uysgfjh", "EventScreen: $selectedColorId")
 
-                        event(
-                            nome = nameState,
-                            descricaoSelecionada,
-                            localSelecionado,
-                            selectedTime,
-                            selectedDate,
-                            idPaciente = id!!.toInt(),
-                            idCor = selectedColorId!!
-                        )
+                        if (!switchState) {
+                            event(
+                                nome = nameState,
+                                descricaoSelecionada,
+                                localSelecionado,
+                                selectedTime,
+                                selectedDate,
+                                idPaciente = id!!.toInt(),
+                                idCor = selectedColorId!!
+                            )
+                        }else{
+                            eventSemanal(
+                                nome = nameState,
+                                descricaoSelecionada,
+                                localSelecionado,
+                                selectedTime,
+                                selectedItems,
+                                idPacienteCuidador = 1,
+                                idCor = selectedColorId!!
+                            )
+                        }
 
                         Log.e("TAG", "EventScreen: $selectedDate")
                     },
@@ -521,17 +594,33 @@ fun EventScreen(
                             fontWeight = FontWeight(600),
                             color = Color(0xFF191D23)
                         )
-                        DateEvent(
-                            context = context,
-                            selectedDate = selectedDate,
-                            onDateChange = {
-                                selectedDate = it
-                            },
-                            focusManager = focusManager,
-                            datePickerState = datePickerState,
-                            validateDate = validateDate,
-                            validateDateError = validateDateError
+                        Switch(
+                            checked = switchState,
+                            onCheckedChange = { isChecked ->
+                                switchState = isChecked
+                            }
                         )
+                        DropdownDiasSemana(
+                            isEnabled = switchState,
+                            onClick = {
+
+                            },
+                            diasSelecionados = selectedItems, // Passando os dias selecionados como parâmetro
+                            onDiasSelecionadosChange = { selectedItems = it } // Recebendo a alteração dos dias selecionados
+                        )
+                        if (!switchState) {
+                            DateEvent(
+                                context = context,
+                                selectedDate = selectedDate,
+                                onDateChange = {
+                                    selectedDate = it
+                                },
+                                focusManager = focusManager,
+                                datePickerState = datePickerState,
+                                validateDate = validateDate,
+                                validateDateError = validateDateError
+                            )
+                        }
                         Spacer(modifier = Modifier.height(12.dp))
                         TimeTextField { formattedTime ->
                             selectedTime = formattedTime
