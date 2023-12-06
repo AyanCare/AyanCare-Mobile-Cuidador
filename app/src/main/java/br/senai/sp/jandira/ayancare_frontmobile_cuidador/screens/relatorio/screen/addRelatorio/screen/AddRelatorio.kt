@@ -42,6 +42,7 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.user.repository.RelatorioRepository
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.patient.screen.CalendaryScreen.Screen.EventScreen.components.DropdownPaciente
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -57,6 +58,9 @@ fun AddRelatorioScreen(
     val context = LocalContext.current
 
     val scrollState = rememberScrollState()
+
+    var selectedDrop by remember { mutableStateOf("") }
+    var pacienteId by remember { mutableStateOf(0) }
 
     val array = CuidadorRepository(context = context).findUsers()
 
@@ -105,7 +109,7 @@ fun AddRelatorioScreen(
                     val id = relatorioObject.getInt("id")
                     Log.i("teste", "relatorio: $id")
 
-                    localStorage.salvarValor(context,id.toString(),"id_relatorio")
+                    localStorage.salvarValor(context,id.toString(),"id_relatorio_questionario")
 
                     Toast.makeText(context, "Sucesso!!", Toast.LENGTH_SHORT).show()
                     navController.navigate("question_screen")
@@ -146,27 +150,38 @@ fun AddRelatorioScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
+                DropdownPaciente(
+                    context = context,
+                    gender = selectedDrop ,
+                    onValueChange = {
+                        selectedDrop = it
+                    },
+                    onPacienteSelected = { paciente ->
+                        pacienteId = paciente.id_paciente // Atualiza o ID do paciente na tela pai
+                        // Aqui você pode fazer o que precisa com o ID do paciente na mesma tela
+                    }
+                )
                 Text(
-                    text = "Lurdes Aparecida",
+                    text = "$selectedDrop",
                     fontSize = 25.sp,
                     fontFamily = FontFamily(Font(R.font.poppins)),
                     fontWeight = FontWeight(600),
                     color = Color(0xFF35225F)
                 )
                 Text(
-                    text = "#76573",
+                    text = "#$pacienteId",
                     fontSize = 14.sp,
                     fontFamily = FontFamily(Font(R.font.poppins)),
                     fontWeight = FontWeight(500),
                     color = Color(0xFF9986BD)
                 )
-                Text(
-                    text = "84 anos, Mulher",
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins)),
-                    fontWeight = FontWeight(500),
-                    color = Color(0xFF9986BD)
-                )
+//                Text(
+//                    text = "84 anos, Mulher",
+//                    fontSize = 14.sp,
+//                    fontFamily = FontFamily(Font(R.font.poppins)),
+//                    fontWeight = FontWeight(500),
+//                    color = Color(0xFF9986BD)
+//                )
 
                 Spacer(modifier = Modifier.height(30.dp))
 
@@ -204,9 +219,9 @@ fun AddRelatorioScreen(
                     DefaultButton(
                         onClick = {
                             relatorio(
-                                "teste",
+                                "$descricaoState",
                                 1,
-                                27,
+                                pacienteId,
                                 id.toInt()
 
                                 )
