@@ -26,7 +26,9 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.scree
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.addRelatorio.screen.AddRelatorioScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen.AddQuestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen.QuestionScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.view.RelatorioByIdPacienteScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.view.RelatorioScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.view.RelatoriosByIdPacienteScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.view.ViewQuestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorioHumor.screen.RelatorioHumorScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorioHumor.screen.RelatoriosHumorScreen
@@ -133,6 +135,14 @@ class SplashActivity : ComponentActivity() {
 
                         composable("relatorio_screen") {
                             RelatorioScreen(navController = navController, localStorage)
+                        }
+
+                        composable("relatorios_paciente_screen") {
+                            RelatoriosByIdPacienteScreen(navController = navController, localStorage)
+                        }
+
+                        composable("relatorio_paciente_screen") {
+                            RelatorioByIdPacienteScreen(navController = navController, localStorage)
                         }
 
                         composable("add_relatorio_screen") {

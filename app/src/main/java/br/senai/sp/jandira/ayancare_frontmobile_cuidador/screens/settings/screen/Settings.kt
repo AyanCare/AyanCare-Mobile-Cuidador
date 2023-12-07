@@ -154,13 +154,13 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            CardSettings(
-                imageVector = Icons.Default.SupervisedUserCircle,
-                text = "Desvincular conta",
-                onClick = {
-                    navController.navigate("emergencia_screen")
-                }
-            )
+//            CardSettings(
+//                imageVector = Icons.Default.SupervisedUserCircle,
+//                text = "Desvincular conta",
+//                onClick = {
+//                    navController.navigate("emergencia_screen")
+//                }
+//            )
             CardSettings(
                 imageVector = Icons.Default.ThumbUpOffAlt,
                 text = "Sugestões",

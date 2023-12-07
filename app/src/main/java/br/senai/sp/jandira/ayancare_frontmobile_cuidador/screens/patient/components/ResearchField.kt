@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.patient.components
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -93,15 +95,16 @@ fun ResearchField(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        TextField(
+        OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(55.dp)
                 .border(
                     width = 1.8.dp,
-                    color = Color(167, 165, 164),
+                    color = Color(1, 1, 1, 1),
                     shape = RoundedCornerShape(5.dp)
-                ),
+                )
+                .background(Color(1, 1, 1, 1)),
             value = pacientes,
             onValueChange = { pacientes = it },
             keyboardOptions = KeyboardOptions(
@@ -153,10 +156,13 @@ fun ResearchField(
                     CardPaciente(
                         onUnlinkClick = {
                             isDialogVisibleConect = true
-                            navRotasController.navigate("relatorios_screen")
+                            localStorage.salvarValor(context, paciente.id_paciente.toString(), "id_paciente")
+                            localStorage.salvarValor(context, paciente.id_paciente.toString(), "id_paciente_relatorio")
+                            navRotasController.navigate("relatorios_paciente_screen")
                         },
                         onProfileClick = {
                             localStorage.salvarValor(context, paciente.id_paciente.toString(), "id_paciente")
+                            localStorage.salvarValor(context, paciente.id_paciente.toString(), "id_paciente_relatorio")
                             navRotasController.navigate("Calendar_screen")
                         },
                         nome = paciente.paciente,

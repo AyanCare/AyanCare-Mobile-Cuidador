@@ -169,31 +169,31 @@ fun CalendaryScreen(
                     )
                 }
             }
-        }else{
-            Column(
-                modifier = Modifier
-                    .padding(end = 15.dp, bottom = 20.dp)
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.End
-            ) {
-                SmallFloatingActionButton(
-                    onClick = {
-                        navRotasController.navigate("add_remedy_screen")
-                    },
-                    shape = CircleShape,
-                    containerColor = Color(0xFF9986BD),
-                    modifier = Modifier.size(65.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Add,
-                        contentDescription = "Adicionar Alarme",
-                        tint = Color.White,
-                        modifier = Modifier
-                            .size(50.dp)
-                    )
-                }
-            }
+        }
+//        else{
+//            Column(
+//                modifier = Modifier
+//                    .padding(end = 15.dp, bottom = 20.dp)
+//                    .fillMaxSize(),
+//                verticalArrangement = Arrangement.Bottom,
+//                horizontalAlignment = Alignment.End
+//            ) {
+//                SmallFloatingActionButton(
+//                    onClick = {
+//                        navRotasController.navigate("add_remedy_screen")
+//                    },
+//                    shape = CircleShape,
+//                    containerColor = Color(0xFF9986BD),
+//                    modifier = Modifier.size(65.dp)
+//                ) {
+//                    Icon(
+//                        imageVector = Icons.Filled.Add,
+//                        contentDescription = "Adicionar Alarme",
+//                        tint = Color.White,
+//                        modifier = Modifier
+//                            .size(50.dp)
+//                    )
+//                }
+//            }
         }
     }
-}
