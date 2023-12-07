@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen.LinkedAccountsScreen
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.notificacoes.screen.NotificationScreen
+import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.sugestao.SuggestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.screen.CadastroScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.AddExperienceScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen.FinalizarCadastroScreen
@@ -32,7 +33,6 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorioHumor.
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.SettingsScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.codigoPaciente.screen.PatientCodeScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.screen.ProfileCaregiverScreen
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.sugestao.SuggestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telaPrincipal.screen.TelaPrincipalScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telasInstrucoes.telaInstrucao1.screen.TelaInstrucao1Screen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.telasInstrucoes.telaInstrucao2.screen.TelaInstrucao2Screen
@@ -123,7 +123,7 @@ class SplashActivity : ComponentActivity() {
                         }
 
                         composable("sugestoes_screen"){
-                            SuggestionScreen(navController = navController, navRotasController = navController)
+                            SuggestionScreen(navController = navController, navRotasController = navController, lifecycleScope = lifecycleScope )
                         }
 
                         //RELATORIO

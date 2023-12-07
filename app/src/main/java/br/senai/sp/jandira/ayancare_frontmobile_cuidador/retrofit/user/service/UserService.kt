@@ -32,4 +32,8 @@ interface UserService {
     @Headers("Content-Type: application/json")
     @PUT("/v2/ayan/medicamento")
     suspend fun updateMedicamento(@Body body: JsonObject): Response<JsonObject>
+
+    @Headers("Content-Type: application/json")
+    @POST("/v1/ayan/sugestao")
+    suspend fun postSuggestion(@Body body: JsonObject): Response<JsonObject>
 }
