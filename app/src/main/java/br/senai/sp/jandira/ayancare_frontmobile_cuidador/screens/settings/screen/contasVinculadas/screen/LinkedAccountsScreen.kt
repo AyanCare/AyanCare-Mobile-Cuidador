@@ -123,7 +123,7 @@ fun LinkedAccountsScreen(
                 ) {
                     IconButton(
                         onClick = {
-                            navController.popBackStack()
+                            navController.navigate("setting_screen")
                         }
                     ) {
                         Icon(
@@ -186,7 +186,7 @@ fun LinkedAccountsScreen(
                 ) {
                     IconButton(
                         onClick = {
-                            navController.popBackStack()
+                            navController.navigate("setting_screen")
                         }
                     ) {
                         Icon(

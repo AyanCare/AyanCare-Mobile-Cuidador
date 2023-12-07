@@ -50,6 +50,11 @@ fun OptionAlarmCalendary(
 
     var isBottomSheetVisible by remember { mutableStateOf(false) }
 
+    var selectId by remember {
+        mutableStateOf("")
+    }
+
+
     val array = CuidadorRepository(context = context).findUsers()
 
     val cuidador = array[0]
@@ -136,19 +141,20 @@ fun OptionAlarmCalendary(
                     width = 75,
                     onClick = {
                         Log.i("TAG", "OptionAlarmCalendary: cliquei")
+                        localStorage.salvarValor(context, alarme.id.toString(), "id_alarme_unitario_calendario")
                         isBottomSheetVisible = true
                     }
                 )
-                if (isBottomSheetVisible) {
-                    TomeiouNao(
-                        isOpen = isBottomSheetVisible,
-                        //navController,
-                        //localStorage,
-                        lifecycleScope,
-                        id = alarme.id
-                    )
-                }
+
                 Spacer(modifier = Modifier.height(10.dp))
+            }
+            if (isBottomSheetVisible) {
+                TomeiouNao(
+                    isOpen = isBottomSheetVisible,
+                    navController,
+                    localStorage,
+                    lifecycleScope
+                )
             }
 
         }

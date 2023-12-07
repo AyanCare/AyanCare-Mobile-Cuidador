@@ -49,21 +49,25 @@ import kotlinx.coroutines.launch
 @Composable
 fun TomeiouNao(
     isOpen: Boolean,
-//    navController: NavController,
-//    localStorage: Storage,
+    navController: NavController,
+    localStorage: Storage,
     lifecycleScope: LifecycleCoroutineScope,
-    id: Int
+    //id: Int
 ) {
 
     val context = LocalContext.current
 
+    var id = localStorage.lerValor(context, "id_alarme_unitario_calendario")
+    Log.e("teste 3e", "TomeiouNao: $id", )
+
     fun updateAlarmeUnitario(
+        id: Int,
         id_status_alarme: Int
     ){
         val alarmeRepository = AlarmeRepository()
         lifecycleScope.launch {
 
-            val response = alarmeRepository.updateAlarmeUnitario(id_status_alarme)
+            val response = alarmeRepository.updateAlarmeUnitario(id, id_status_alarme)
 
             if (response.isSuccessful) {
                 Log.e(MainActivity::class.java.simpleName, "alarmeUnitario bem-sucedido")
@@ -74,7 +78,7 @@ fun TomeiouNao(
                     Toast.makeText(context, "algo está invalido", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(context, "Sucesso!!", Toast.LENGTH_SHORT).show()
-                    //navController.navigate("add_stock_screen")
+                    navController.navigate("Calendar_screen")
                 }
             } else {
                 val errorBody = response.errorBody()?.string()
@@ -127,7 +131,7 @@ fun TomeiouNao(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    updateAlarmeUnitario(1)
+                                    updateAlarmeUnitario(id!!.toInt(), 2)
                                 }
                         ){
                             Text(
@@ -151,8 +155,9 @@ fun TomeiouNao(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable{
-                                    updateAlarmeUnitario(0)
+                                .clickable {
+                                    //updateAlarmeUnitario(id!!.toInt(), 3)
+                                    navController.navigate("Calendar_screen")
                                 }
                         ){
                             Text(

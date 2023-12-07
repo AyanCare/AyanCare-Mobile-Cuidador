@@ -131,7 +131,7 @@ fun ViewQuestionScreen(
             ) {
                 IconButton(
                     onClick = {
-                        navController.navigate("relatorio_screen")
+                        navController.popBackStack()
                     }
                 ) {
                     Icon(
