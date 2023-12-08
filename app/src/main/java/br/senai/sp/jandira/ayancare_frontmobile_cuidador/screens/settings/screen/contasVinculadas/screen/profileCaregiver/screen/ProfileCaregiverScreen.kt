@@ -38,8 +38,8 @@ import br.senai.sp.jandira.ayancare_frontmobile.retrofit.patient.service.Pacient
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.BoxProfile
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CircleProfile
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.perfil.components.BoxProfile
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.perfil.components.CircleProfile
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.profileCaregiver.components.ProcessingProfile
 import retrofit2.Call
 import retrofit2.Response

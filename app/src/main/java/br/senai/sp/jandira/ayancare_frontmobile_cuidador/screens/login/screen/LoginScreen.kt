@@ -187,10 +187,10 @@ fun LoginScreen(
     }
 
 
-//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//        val permissionState: PermissionState = rememberPermissionState(
-//            permission = Manifest.permission.POST_NOTIFICATIONS
-//        )
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        val permissionState: PermissionState = rememberPermissionState(
+            permission = Manifest.permission.POST_NOTIFICATIONS
+        )
 
         Surface(
             color = Color(248, 240, 236)
@@ -360,4 +360,5 @@ fun LoginScreen(
 //    }
 
         }
+    }
 }

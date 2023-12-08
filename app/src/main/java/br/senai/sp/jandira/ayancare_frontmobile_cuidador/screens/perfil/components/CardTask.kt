@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.perfil.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
