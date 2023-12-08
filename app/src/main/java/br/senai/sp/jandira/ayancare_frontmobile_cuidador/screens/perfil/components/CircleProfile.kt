@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.perfil.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border

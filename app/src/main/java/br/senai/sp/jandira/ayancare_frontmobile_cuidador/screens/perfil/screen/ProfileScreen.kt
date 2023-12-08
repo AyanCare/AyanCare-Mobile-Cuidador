@@ -1,7 +1,8 @@
-package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.screen
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.perfil.screen
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,8 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -33,13 +37,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CardTask
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.perfil.components.CardTask
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.RetrofitFactory
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.notification.NotificacaoResponse
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.notification.service.Notificacao
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.BoxProfile
-import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.profile.components.CircleProfile
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.perfil.components.BoxProfile
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.perfil.components.CircleProfile
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,7 +51,8 @@ import retrofit2.Response
 
 @Composable
 fun ProfileScreen(
-    navController: NavController
+    navController: NavController,
+    navRotasController: NavController
 ) {
 
     val context = LocalContext.current
@@ -98,18 +103,56 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ) {
+
+
+
+
             BoxProfile()
-            IconButton(
-                onClick = {
-                    navController.popBackStack()
-                }
+//            IconButton(
+//                onClick = {
+//                    navController.popBackStack()
+//                }
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Default.ArrowBackIosNew,
+//                    contentDescription = "",
+//                    tint = Color.White
+//                )
+//            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(160.dp)
+                    .padding(end = 10.dp, bottom = 10.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.End
             ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBackIosNew,
-                    contentDescription = "",
-                    tint = Color.White
-                )
+                Button(
+                    onClick = {
+                        navRotasController.navigate("edit_profile_screen")
+                    },
+                    modifier = Modifier
+                        .width(105.dp)
+                        .height(30.dp),
+                    colors = ButtonDefaults.buttonColors(Color(249, 241, 237))
+                ) {
+                    Text(
+                        text = "Editar perfil",
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins)),
+                        fontWeight = FontWeight(500),
+                        color = Color(0xFF35225F),
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
+
+
+
+
+
+
             Column(
                 //verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -118,7 +161,7 @@ fun ProfileScreen(
                     .fillMaxSize()
             ) {
                 CircleProfile(
-                    painter = foto
+                    painter = "$foto"
                 )
 
                 Text(

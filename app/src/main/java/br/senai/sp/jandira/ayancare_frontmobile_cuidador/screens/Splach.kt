@@ -22,6 +22,7 @@ import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.login.screen.Lo
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.menuBar.MainScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.patient.screen.CalendaryScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.patient.screen.CalendaryScreen.Screen.EventScreen.Screen.EventScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.perfil.screen.editProfile.screen.EditProfileScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.RelatoriosScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.addRelatorio.screen.AddRelatorioScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.relatorio.screen.questionario.screen.AddQuestionScreen
@@ -171,6 +172,10 @@ class SplashActivity : ComponentActivity() {
                         }
 
                         //PERFIL
+                        composable("edit_profile_screen"){
+                            EditProfileScreen(navController = navController, navRotasController = navController, lifecycleScope = lifecycleScope)
+                        }
+
 
                         //PACIENTES
                         composable("Calendar_screen"){
