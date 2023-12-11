@@ -11,19 +11,16 @@ class QuestionarioRepository {
 
     private val apiService = RetrofitFactory.getInstance().create(RelatorioService::class.java)
 
-    suspend fun registerQuestionario(
-        id_perguta:Int,
-        id_relatorio: Int,
+    suspend fun updateQuestionario(
+        id:Int,
         resposta:Boolean
     ): Response<JsonObject> {
         val requestBody = JsonObject().apply {
-
-            addProperty("id_pergunta", id_perguta)
-            addProperty("id_relatorio", id_relatorio)
+            addProperty("id", id)
             addProperty("resposta",resposta)
         }
 
-        return apiService.createRelatorio(requestBody)
+        return apiService.updateQuestionario(requestBody)
 
     }
 

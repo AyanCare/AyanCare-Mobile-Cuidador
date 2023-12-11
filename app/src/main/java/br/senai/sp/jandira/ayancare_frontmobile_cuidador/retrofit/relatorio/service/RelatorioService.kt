@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface RelatorioService {
@@ -19,6 +20,10 @@ interface RelatorioService {
     @Headers("Content-Type: application/json")
     @POST("/v1/ayan/relatorio")
     suspend fun createRelatorio(@Body body: JsonObject): retrofit2.Response<JsonObject>
+
+    @Headers("Content-Type: application/json")
+    @PUT("/v1/ayan/questionario")
+    suspend fun updateQuestionario(@Body body: JsonObject): retrofit2.Response<JsonObject>
 
     @Headers("Content-Type: application/json")
     @POST("/v1/ayan/Pergunta")
