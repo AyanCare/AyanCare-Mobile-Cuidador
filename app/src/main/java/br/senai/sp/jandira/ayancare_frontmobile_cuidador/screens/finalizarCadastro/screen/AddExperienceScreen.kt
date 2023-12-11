@@ -3,6 +3,7 @@ package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadas
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -117,7 +119,7 @@ fun AddExperienceScreen(
 
                 Log.d(MainActivity::class.java.simpleName, "Registro bem-sucedido")
 
-                navController.navigate("main_screen")
+                navController.navigate("tela_instrucao1_screen")
 
             } else {
 
@@ -179,7 +181,9 @@ fun AddExperienceScreen(
                 )
             }
             Column(
-                modifier = Modifier.width(190.dp)
+                modifier = Modifier.width(190.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 DefaultButton(
                     text = "Finalizar",
@@ -207,6 +211,19 @@ fun AddExperienceScreen(
                             id_endereco_cuidador = 1,
                             genero = genero
                         )
+                        //navController.navigate("tela_instrucao1_screen")
+                    }
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "Pular",
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins)),
+                    fontWeight = FontWeight(600),
+                    color = Color(0xFF35225F),
+                    textAlign = TextAlign.Center,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier.clickable {
                         navController.navigate("tela_instrucao1_screen")
                     }
                 )
