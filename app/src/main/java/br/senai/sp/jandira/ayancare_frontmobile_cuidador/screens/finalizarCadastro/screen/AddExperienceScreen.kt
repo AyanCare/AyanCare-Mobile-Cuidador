@@ -1,5 +1,7 @@
 package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.finalizarCadastro.screen
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,19 +32,102 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.MainActivity
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.R
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.DefaultButton
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.components.Wave
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.retrofit.user.repository.CadastroRepository
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.Storage
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.components.ProgressBar
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.funcaoQueChamaSqlLite.deleteUserSQLite
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.funcaoQueChamaSqlLite.saveLogin
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.sqlite.repository.CuidadorRepository
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddExperienceScreen(
-    navController: NavController
+    navController: NavController,
+    lifecycleScope: LifecycleCoroutineScope,
+    localStorage: Storage
 ) {
 
     val context = LocalContext.current
-    var experienciaState by remember { mutableStateOf("") }
+    var experienciaState by remember {
+        mutableStateOf("") }
+
+    val senha = localStorage.lerValor(context, "senha_paciente")
+    val array = CuidadorRepository(context = context).findUsers()
+
+    val cuidador = array[0]
+    var id = cuidador.id.toLong()
+    var token = cuidador.token
+    var nome = cuidador.nome
+    var data_nascimento = cuidador.dataNascimento
+    var email = cuidador.email
+    var foto = cuidador.foto
+    var genero = cuidador.genero
+
+    fun atualizarDados(
+        token: String,
+        id: Int,
+        nome: String,
+        data_nascimento: String,
+        email: String,
+        senha:String,
+        foto: String,
+        experiencia:String,
+        id_endereco_cuidador: Int,
+        genero: String
+    ) {
+        val userRepository = CadastroRepository()
+        lifecycleScope.launch {
+
+            val response = userRepository.updateUser(
+                token,
+                id,
+                nome,
+                data_nascimento,
+                email,
+                senha,
+                foto,
+                experiencia,
+                id_endereco_cuidador,
+                genero
+
+            )
+
+            Log.e("response", "finalizarCadastro: $response")
+
+            if (response.isSuccessful) {
+                deleteUserSQLite(context, id)
+                saveLogin(
+                    context = context,
+                    token = token!!,
+                    id = id.toLong(),
+                    nome = nome,
+                    dataNascimento = data_nascimento,
+                    email = email,
+                    foto = foto,
+                    experiencia = experiencia,
+                    genero = genero,
+                    tipo = "Cuidador"
+                )
+
+                Log.d(MainActivity::class.java.simpleName, "Registro bem-sucedido")
+
+                navController.navigate("main_screen")
+
+            } else {
+
+                val errorBody = response.errorBody()?.string()
+                Log.e(MainActivity::class.java.simpleName, "Erro durante o registro: $errorBody")
+                Toast.makeText(context, "Erro durante o registro", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+    }
 
     Surface(
         color = Color(248, 240, 236)
@@ -99,6 +184,29 @@ fun AddExperienceScreen(
                 DefaultButton(
                     text = "Finalizar",
                     onClick = {
+
+                        Log.i("TAG", "AddExperienceScreen: $token ")
+                        Log.i("TAG", "AddExperienceScreen: $id ")
+                        Log.i("TAG", "AddExperienceScreen: $nome ")
+                        Log.i("TAG", "AddExperienceScreen: $data_nascimento ")
+                        Log.i("TAG", "AddExperienceScreen: $email ")
+                        Log.i("TAG", "AddExperienceScreen: $senha ")
+                        Log.i("TAG", "AddExperienceScreen: $foto ")
+                        Log.i("TAG", "AddExperienceScreen: $experienciaState ")
+                        Log.i("TAG", "AddExperienceScreen: $genero ")
+
+                        atualizarDados(
+                            token = token.toString(),
+                            id = id.toInt(),
+                            nome = nome.toString(),
+                            data_nascimento = data_nascimento.toString(),
+                            email = email.toString(),
+                            senha = senha.toString(),
+                            foto = foto, // Use a imageURL
+                            experiencia = experienciaState,
+                            id_endereco_cuidador = 1,
+                            genero = genero
+                        )
                         navController.navigate("tela_instrucao1_screen")
                     }
                 )

@@ -63,10 +63,6 @@ fun ProfileScreen(
         mutableStateOf<List<Notificacao>>(emptyList())
     }
 
-
-
-
-
     val array = CuidadorRepository(context = context).findUsers()
 
     val cuidador = array[0]
@@ -86,8 +82,15 @@ fun ProfileScreen(
             response: Response<NotificacaoResponse>
         ) {
             Log.e("TAG", "onResponse:${response.body()} ")
-            listNotificacoes = response.body()!!.notificacao
-            Log.e("TAG", "onResponse:$listNotificacoes")
+
+            if (response.body()!!.status == 404) {
+                Log.e("TAG", "a resposta está nula")
+                listNotificacoes = emptyList()
+            } else {
+                listNotificacoes = response.body()!!.notificacao
+                Log.e("TAG", "onResponse:$listNotificacoes")
+            }
+
         }
         override fun onFailure(call: Call<NotificacaoResponse>, t: Throwable) {
             Log.i("ds3t", "onFailure: ${t.message}")
@@ -189,16 +192,14 @@ fun ProfileScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     if (descricao.isEmpty()){
-
                         Text(
-                            text = "Você não tem nenhuma descirção",
+                            text = "Você não tem nenhuma descrição",
                             fontSize = 14.sp,
                             fontFamily = FontFamily(Font(R.font.poppins)),
                             fontWeight = FontWeight(400),
                             color = Color(0xFF9986BD),
                             textAlign = TextAlign.Center
                         )
-
                     }else{
                         Text(
                             text = descricao,
@@ -221,14 +222,24 @@ fun ProfileScreen(
                     color = Color(0xFF35225F)
                 )
                 Spacer(modifier = Modifier.height(15.dp))
-                for (notificacao in listNotificacoes){
-
-                    CardTask(
-                        nome = notificacao.nome,
-                        dia = notificacao.data_criacao,
-                        hora = notificacao.hora_criacao
+                if (listNotificacoes.isEmpty()){
+                    Text(
+                        text = "Não existe tarefa no momento",
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFF9986BD),
+                        textAlign = TextAlign.Center
                     )
-                    Spacer(modifier = Modifier.height(10.dp))
+                }else{
+                    for (notificacao in listNotificacoes){
+                        CardTask(
+                            nome = notificacao.nome,
+                            dia = notificacao.data_criacao,
+                            hora = notificacao.hora_criacao
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
                 }
             }
         }

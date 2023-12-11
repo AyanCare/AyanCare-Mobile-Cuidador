@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen
+package br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -101,7 +102,6 @@ fun LinkedAccountsScreen(
         override fun onFailure(call: Call<ConectarResponse>, t: Throwable) {
             Log.i("ds3t", "onFailure: ${t.message}")
         }
-
     })
 
     if (listPacientes.isEmpty()) {
@@ -165,7 +165,7 @@ fun LinkedAccountsScreen(
                     )
                 }
             }
-            FloatingActionButtonConectarContas(navController, localStorage,lifecycleScope )
+            FloatingActionButtonConectarContas(navController, localStorage,lifecycleScope)
         }
     }else{
         Surface(
@@ -235,7 +235,6 @@ fun LinkedAccountsScreen(
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                         }
-
                     }
                     if (isDialogVisibleConect) {
                         ModalDeleteConect(

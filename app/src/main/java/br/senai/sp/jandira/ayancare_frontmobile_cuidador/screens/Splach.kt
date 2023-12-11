@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.contasVinculadas.screen.LinkedAccountsScreen
+import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.settings.screen.contasVinculadas.screen.LinkedAccountsScreen
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.notificacoes.screen.NotificationScreen
 import br.senai.sp.jandira.ayancare_frontmobile.screens.settings.screen.sugestao.SuggestionScreen
 import br.senai.sp.jandira.ayancare_frontmobile_cuidador.screens.cadastro.screen.CadastroScreen
@@ -85,7 +85,7 @@ class SplashActivity : ComponentActivity() {
                             FinalizarCadastroScreen(navController = navController, lifecycleScope = lifecycleScope, localStorage = localStorage)
                         }
                         composable("add_experience_screen"){
-                            AddExperienceScreen(navController = navController)
+                            AddExperienceScreen(navController = navController, lifecycleScope = lifecycleScope, localStorage = localStorage)
                         }
 
                         composable("tela_instrucao1_screen") {

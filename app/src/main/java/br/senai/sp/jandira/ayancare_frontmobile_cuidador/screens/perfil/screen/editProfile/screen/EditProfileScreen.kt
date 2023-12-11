@@ -121,9 +121,7 @@ fun EditProfileScreen(
 
     val scrollState = rememberScrollState()
 
-
     val  array = CuidadorRepository(context = context).findUsers()
-
 
     val cuidador = array[0]
     var id = cuidador.id.toLong()
@@ -145,7 +143,6 @@ fun EditProfileScreen(
         mutableStateOf<Uri?>(null)
     }
 
-
     val launcherImage = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) {
@@ -158,9 +155,7 @@ fun EditProfileScreen(
             }
             bitmap.value = source?.let { it1 -> ImageDecoder.decodeBitmap(it1) }!!
         }
-
         imagemState = it
-
     }
 
     var nomeState by remember {
@@ -254,12 +249,10 @@ fun EditProfileScreen(
 
             )
 
-
             Log.e("response", "finalizarCadastro: $response")
 
             if (response.isSuccessful) {
                 deleteUserSQLite(context, id)
-
                 saveLogin(
                     context = context,
                     token = token!!,
@@ -311,12 +304,10 @@ fun EditProfileScreen(
             Column(
                 //verticalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .padding(top = 110.dp, start = 15.dp)
+                    .padding(top = 110.dp, start = 15.dp, end = 15.dp)
                     .fillMaxSize()
             ) {
                 Column(
-                    modifier = Modifier
-                        .padding(end = 15.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Box(
@@ -420,17 +411,25 @@ fun EditProfileScreen(
                     value = experienciaState,
                     onValueChange = {
                         //nomeState = it
-                        if (it.length <= 50) {
-                            experienciaState = it
-                        }
+//                        if (it.length <= 200) {
+//                            experienciaState = it
+//                        }
+                                    experienciaState = it
                     },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp),
                     shape = RoundedCornerShape(4.dp),
                     label = {
                         Text(
                             text = "Coloque a sua experiencia"
                         )
-                    }
+                    },
+                    singleLine = false,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done
+                    )
                 )
 
 

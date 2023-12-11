@@ -61,7 +61,7 @@ fun HomeScreen(
             Column {
                 Text(
                     text =
-                    if (genero == "Feminino"){ "Bem-Vinda" } else { "Bem-Vindo" },
+                    if (genero == "Mulher"){ "Bem-Vinda" } else { "Bem-Vindo" },
                     fontSize = 45.sp,
                     fontFamily = FontFamily(Font(R.font.poppins)),
                     fontWeight = FontWeight.Light,
